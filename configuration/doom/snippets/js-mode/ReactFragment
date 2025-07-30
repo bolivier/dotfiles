@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: ReactFragment
+# key: frag
+# condition: t
+# --
+<>
+$0
+</>

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: export function
+# key: efn
+# condition: t
+# --
+export function $1($2) {
+       $0
+}

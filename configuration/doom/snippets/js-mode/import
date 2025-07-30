@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: import
+# key: im
+# condition: t
+# --
+import ${2:{$0}} from '$1';

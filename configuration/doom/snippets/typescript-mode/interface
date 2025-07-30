@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: interface
+# key: intf
+# condition: t
+# --
+interface $1 {
+          $0
+}

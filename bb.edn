@@ -1,0 +1,6 @@
+{:paths ["src" "configuration"]
+ :tasks
+ {:requires ([tasks.core :as t])
+  link-dotfiles (t/link-dotfiles)
+
+  brew-install (t/brew-install)}}

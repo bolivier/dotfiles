@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: fulcro-ui
+# key: ui
+# condition: t
+# --
+(def ui-${1:$(bso/kebab-case yas-text)} (comp/factory $1))$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: children
+# key: prchildren
+# condition: t
+# --
+{ children }: { children: React.ReactNode }

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: React.ReactNode
+# uuid:
+# key: rrn
+# condition: t
+# --
+React.ReactNode$0

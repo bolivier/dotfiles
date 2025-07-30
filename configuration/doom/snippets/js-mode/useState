@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: useState
+# key: us
+# condition: t
+# --
+const [${1:state}, set${1:$(upcase-initials (yas-text))}] = ${2:React.}useState($0);

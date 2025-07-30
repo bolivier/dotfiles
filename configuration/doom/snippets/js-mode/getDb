@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: getDb
+# key: gdb
+# condition: t
+# --
+const db = await getDb();

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: eval-block
+# uuid:
+# key: =
+# condition: t
+# --
+<%= $0 %>

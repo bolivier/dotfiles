@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: todocomment
+# uuid:
+# key: todocom
+# condition: t
+# --
+// TODO :: $0

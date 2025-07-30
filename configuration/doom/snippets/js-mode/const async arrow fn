@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: const async arrow fn
+# key: cafn
+# condition: t
+# --
+const ${1:name} = async ($2) => {
+      $0
+}

@@ -1,0 +1,11 @@
+[Unit]
+Description=KMonad keyboard remapping
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kmonad /home/brandon/.config/kmonad/config.kbd
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

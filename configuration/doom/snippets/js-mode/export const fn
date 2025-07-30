@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: export const fn
+# key: ecfn
+# condition: t
+# --
+export const ${1:name} = ($2) => {
+       $0
+}

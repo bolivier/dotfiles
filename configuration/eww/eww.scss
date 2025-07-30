@@ -1,0 +1,81 @@
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  border: none;
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: Liberation Mono;
+  min-height: 16px;
+}
+
+.pill {
+  background: #181825;
+  color: #cdd6f4;
+  border-radius: 8;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.clock {
+}
+
+.right-adjacent {
+  padding-right: 10px;
+}
+
+.left-adjacent {
+  padding-left: 10px;
+}
+
+.workspaces {
+}
+
+.workspace-button {
+  padding-top: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-size: 18px;
+}
+
+.workspace-button.active {
+}
+
+.workspace-button.inactive {
+  color: #7f849c;
+}
+
+.battery {
+  padding-right: 12px;
+}
+.volume {
+  padding-right: 15px;
+}
+
+.dropdown-content {
+  border-radius: 8px;
+  border: 2px solid #7c818c;
+  background: #383c4a;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.bluetooth-entry {
+  padding-top: 5px;
+  padding-right: 5px;
+
+  &:hover {
+    background: blue;
+  }
+}
+
+.bluetooth-pill {
+}
+
+.devices-title {
+  font-size: 18px;
+  border-bottom: 2px solid #7c818c;
+}

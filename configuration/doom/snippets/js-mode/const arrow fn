@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: const arrow fn
+# key: cfn
+# condition: t
+# --
+const ${1:name} = ($2) => {
+      $0
+}

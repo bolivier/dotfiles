@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: react functional component
+# uuid:
+# key: rfc
+# condition: t
+# --
+export function ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}({}) {
+       $0
+};

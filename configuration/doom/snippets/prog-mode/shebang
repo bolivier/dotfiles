@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: shebang
+# uuid:
+# key: sb
+# condition: t
+# --
+#! /usr/bin/env ${1:sh}$0

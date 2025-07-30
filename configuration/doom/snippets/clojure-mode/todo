@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: todo
+# uuid:
+# key: t
+# condition: t
+# --
+;; TODO $0

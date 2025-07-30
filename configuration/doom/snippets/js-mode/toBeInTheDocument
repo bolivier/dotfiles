@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: toBeInTheDocument
+# key: tbid
+# condition: t
+# --
+.toBeInTheDocument()

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: export-default-fn
+# key: edf
+# condition: t
+# --
+export default function ${1:name}() {
+       $0
+}

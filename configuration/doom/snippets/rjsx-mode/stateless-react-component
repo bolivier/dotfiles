@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: stateless-react-component
+# uuid:
+# key: src
+# condition: t
+# --
+export default function ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}({}) {
+       $0
+};

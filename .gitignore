@@ -1,0 +1,7 @@
+/**/*.log
+.ds_Store
+/.lsp
+/.cpcache
+/.nrepl-port
+/.clj-kondo/.cache
+/configuration/fish/fish_variables

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: defsc
+# uuid:
+# key: defsc
+# condition: t
+# --
+(defsc ${1:ComponentName} [this props]
+       $0)
+
+(def ui-${1:$(s-replace "_" "-" (s-snake-case yas-text))} (comp/factory $1))

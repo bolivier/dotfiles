@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: className={}
+# key: cn
+# condition: t
+# --
+className="$0"

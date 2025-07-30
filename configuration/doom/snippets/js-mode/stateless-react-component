@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: react
+# key: react
+# condition: t
+# --
+import React from 'react';

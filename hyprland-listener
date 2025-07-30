@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Check if HYPRLAND_INSTANCE_SIGNATURE is set
+if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    echo "Error: HYPRLAND_INSTANCE_SIGNATURE environment variable not found"
+    echo "Make sure you're running this from within a Hyprland session"
+    exit 1
+fi
+
+# Construct socket path
+SOCKET_PATH="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
+
+# Check if socket exists
+if [ ! -S "$SOCKET_PATH" ]; then
+    echo "Error: Hyprland event socket not found at $SOCKET_PATH"
+    exit 1
+fi
+
+echo "Connecting to Hyprland event socket: $SOCKET_PATH"
+echo "Listening for Hyprland events..."
+echo "Press Ctrl+C to stop"
+echo
+
+# Use socat to connect to the Unix socket and echo output
+socat -u "UNIX-CONNECT:$SOCKET_PATH" STDOUT | while IFS= read -r line; do
+    echo "Event: $line"
+done

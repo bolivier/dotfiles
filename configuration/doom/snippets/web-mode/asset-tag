@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: asset-tag
+# uuid: 020c3a43-bcf9-4269-a157-0167e4c10e11
+# key: =
+# condition: t
+# --
+<%= $0 %>
