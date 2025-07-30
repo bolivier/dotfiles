@@ -9,13 +9,12 @@ tap "borkdude/brew"
 # -----------------------------
 
 brew "act"
-# brew "asdf"
 brew "mise"
 brew "awscli"
 brew "borkdude/brew/babashka"
 brew "borkdude/brew/clj-kondo"
 brew "bat"
-# brew "bun"
+brew "bun"
 brew "cmake"
 brew "libtool"
 brew "libyaml" # necessary for Ruby
@@ -24,14 +23,11 @@ brew "fish"
 brew "fzf"
 brew "git"
 brew "htop"
-# brew "neil"
 brew "neovim"
 brew "ripgrep"
 brew "tree"
 brew "tree-sitter"
-# brew "ngrok" # Not working right now
 brew "cloc"
-# brew "rustup-init"  # 'rustup' is actually 'rustup-init' in brew
 brew "curl"
 
 # JDK / JRE / Clojure stuff
@@ -65,18 +61,3 @@ brew "d12frosted/emacs-plus/emacs-plus", args: [
   "with-retro-gnu-meditate-levitate-icon",
   "with-dbus"
 ]
-
-
-# -----------------------------
-# 🐘 PostgreSQL with JIT (v15)
-# -----------------------------
-
-brew "postgresql@15" # There's no official 'postgresql_15_jit' in brew
-
-# After install, you can enable JIT in `postgresql.conf`
-
-# -----------------------------
-# 🛍️ Mac App Store apps (optional)
-# -----------------------------
-
-# mas "Xcode", id: 497799835
