@@ -468,6 +468,26 @@ Return nil if not inside a project."
     (save-buffer 0))
 
   (advice-add 'cider-eval-buffer :before #'save-clojure-buffer)
+  (after! evil
+    ;; these don't work that well.
+
+    (defun evil-cider-update-cursor-for-eval (f &rest args)
+      (interactive)
+      (unless (eq evil-state 'normal)
+        (funcall f args)
+        (cond ((looking-at ")") (save-excursion
+                                  (evil-save-state
+                                    (evil-emacs-state)
+                                    (forward-char 1)
+                                    (funcall f args))))
+              ((looking-at "(") (save-excursion
+                                  (evil-save-state
+                                    (evil-emacs-state)
+                                    (paredit-forward)
+                                    (funcall f args)))))))
+
+    (advice-add 'cider-eval-last-sexp :around #'evil-cider-update-cursor-for-eval)
+    (advice-add 'cider-pprint-eval-last-sexp :around #'evil-cider-update-cursor-for-eval))
 
   (defun bso-cider/conditional-eval ()
     "Evaluate the region as elisp when the region is active.
@@ -491,6 +511,7 @@ Otherwise move forward sentence, like normal"
    "DEL" 'paredit-backward-delete
    :n ">" #'paredit-forward-slurp-sexp
    :n "<" #'paredit-forward-barf-sexp
+   :nv "D" #'paredit-kill
 
    (:map cider-mode-map
     :leader :prefix "me"
@@ -510,8 +531,7 @@ Otherwise move forward sentence, like normal"
    "M-E" #'cider-eval-buffer
 
    :leader :prefix "l"
-   "e a" #'bso/cider-restart
-   )
+   "e a" #'bso/cider-restart)
 
   (defun skip-to-closing-if-at-opening (f &rest args)
     (save-excursion
