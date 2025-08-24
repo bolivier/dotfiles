@@ -185,10 +185,15 @@
 (use-package! magit
   :init
   (map! "C-c g b"   #'magit-blame
-        "C-c g g"   #'magit-status
+                                        ; "C-c g g"   #'magit-status ;; moving to jj
         "C-c g n" #'+vc-gutter/next-hunk
         "C-c g p" #'+vc-gutter/previous-hunk
         "C-c g r" #'+vc-gutter/revert-hunk))
+
+(use-package! jj-mode
+  :init
+  (map!
+   "C-c g g" #'jj-log))
 
 (after! paredit
   (map! :mode emacs-lisp-mode
@@ -477,14 +482,14 @@ Return nil if not inside a project."
         (funcall f args)
         (cond ((looking-at ")") (save-excursion
                                   (evil-save-state
-                                    (evil-emacs-state)
-                                    (forward-char 1)
-                                    (funcall f args))))
+                                   (evil-emacs-state)
+                                   (forward-char 1)
+                                   (funcall f args))))
               ((looking-at "(") (save-excursion
                                   (evil-save-state
-                                    (evil-emacs-state)
-                                    (paredit-forward)
-                                    (funcall f args)))))))
+                                   (evil-emacs-state)
+                                   (paredit-forward)
+                                   (funcall f args)))))))
 
     (advice-add 'cider-eval-last-sexp :around #'evil-cider-update-cursor-for-eval)
     (advice-add 'cider-pprint-eval-last-sexp :around #'evil-cider-update-cursor-for-eval))
@@ -577,7 +582,8 @@ This fixes that with better behavior."
   (save-excursion
     (forward-line 1)
     (indent-for-tab-command)))
-(map! "C-o" #'bso/open-line-indent)
+
+;; (map! "C-o" #'bso/open-line-indent)
 
 (defun bso/join-line ()
   (interactive)

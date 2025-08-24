@@ -80,3 +80,4 @@
 (package! yuck-mode)
 (package! queue)
 (package! sesman)
+(package! jj-mode :recipe (:host github :repo "bolivier/jj-mode.el"))
