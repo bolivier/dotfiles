@@ -1,0 +1,52 @@
+{
+  "layer": "top", // Waybar at top layer
+  "margin": "10 0 10 5",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": [],
+  "modules-right": ["custom/nordvpn", "pulseaudio", "battery", "clock"],
+
+  "hyprland/workspaces": {
+    "persistent-workspaces": {
+      "*": [1, 2, 3, 4, 5, 5, 6, 7, 8, 9]
+    }
+  },
+
+  "custom/nordvpn": {
+    "format": "{}",
+    "exec": "~/bin/nordvpn-status",
+    "interval": 1,
+    "on-click": "nordvpn-toggle"
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-bluetooth": "{volume}% {iacon}",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", ""]
+    },
+    "scroll-step": 1,
+    "on-click": "pavucontrol",
+    "ignored-sinks": ["Easy Effects Sink"]
+  },
+
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%a, %d %b, %I:%M %p}"
+  }
+}

@@ -15,7 +15,7 @@
 ;; Which OS needs this config module?
 (def common-modules #{"fish" "doom"})
 (def macos-modules #{})
-(def linux-modules #{"hypr" "foot" "systemd" "eww" "kmonad" "kanata"})
+(def linux-modules #{"hypr" "systemd" "eww" "kmonad" "kanata" "waybar"})
 
 (def mac? (str/starts-with? (System/getProperty "os.name") "Mac"))
 
