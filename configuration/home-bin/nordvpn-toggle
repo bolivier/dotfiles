@@ -1,0 +1,13 @@
+#!/usr/bin/env bb
+(ns nordvpn-toggle
+  (:require
+   [babashka.process :as p]))
+
+(defn disconnected? [status-output]
+  (= "Status: Disconnected\n" status-output))
+
+(def status-output (:out (p/shell {:out :string} "nordvpn status")))
+
+(p/shell (str "nordvpn " (if (disconnected? status-output)
+                          "connect"
+                          "disconnect")))

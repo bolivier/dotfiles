@@ -1,0 +1,48 @@
+#!/usr/bin/env bb
+(ns nordvpn-status
+  (:require [babashka.process :as p]
+            [clojure.string :as str]))
+
+(defn us? [output-data]
+  (= "United States"
+     (:country output-data)))
+
+(defn get-data-from-output
+  "Returns a map like
+
+{:current-protocol \"UDP\",
+ :ip \"181.214.196.148\",
+ :transfer \"36.88 KiB received, 36.09 KiB sent\",
+ :server \"United States #9707\",
+ :uptime \"18 seconds\",
+ :city \"Dallas\",
+ :hostname \"us9707.nordvpn.com\",
+ :status \"Connected\",
+ :current-technology \"NORDLYNX\",
+ :post-quantum-vpn \"Disabled\",
+  :country \"United States \"}"
+  [output]
+  (->> output
+       str/split-lines
+       (map #(str/split % #": "))
+       (filter #(= 2 (count %)))
+       (map (fn [[k v]]
+              [(-> k
+                   str/lower-case
+                   (str/replace " " "-")
+                   keyword)
+               v]))
+       (into {})))
+
+(print
+ (let [output (get-data-from-output (:out (p/shell {:out :string} "nordvpn status")))]
+   (cond
+     (= "Disconnected" (:status output))
+     "󰌙 VPN off"
+
+     (us? output)
+     (str "󰌘 "(:city output))
+
+
+     :else
+     (str "󰌘 " (:city output) " | " (:country output)))))
