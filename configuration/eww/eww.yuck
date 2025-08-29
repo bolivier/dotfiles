@@ -43,8 +43,6 @@
 
         (volume-display :volume-data volume-data)
 
-        (battery-display :battery battery)
-
         (clock))))
 
 (defpoll battery :interval "30s"

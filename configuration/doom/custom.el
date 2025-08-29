@@ -19,7 +19,10 @@
       (with-parsed-tramp-file-name . 2) (thread-first . 0) (thread-last . 0)
       (transient-define-prefix . defmacro) (transient-define-suffix . defmacro))
      (checkdoc-package-keywords-flag)))
- '(package-selected-packages '(vc-jj))
+ '(package-selected-packages '(transient-showcase vc-jj))
+ '(package-vc-selected-packages
+   '((transient-showcase :url
+      "https://github.com/positron-solutions/transient-showcase.git")))
  '(projectile-create-missing-test-files t)
  '(safe-local-variable-values '((cider-clojure-cli-aliases . ":test:dev"))))
 

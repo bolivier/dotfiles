@@ -102,7 +102,6 @@ window#waybar.hidden {
     background: #383c4a;
 }
 
-
 #custom-nordvpn {
     margin-right: 8px;
     padding-left: 16px;
@@ -128,7 +127,6 @@ window#waybar.hidden {
     color: #2a5c45;
 }
 
-
 #battery {
     margin-right: 8px;
     padding-left: 16px;
@@ -141,7 +139,7 @@ window#waybar.hidden {
 
 #battery.charging {
     color: #ffffff;
-    background-color: #26A65B;
+    background-color: #26a65b;
 }
 
 #battery.warning:not(.charging) {

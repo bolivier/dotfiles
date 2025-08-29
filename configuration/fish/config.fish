@@ -49,3 +49,9 @@ if commandline -x >/dev/null 2>&1
 else
     complete -xc mise -a '(usage complete-word --shell fish -s "$_usage_spec_mise_2025_7_2" -- (commandline -opc) (commandline -t))'
 end
+
+if not pgrep -u $USER ssh-agent >/dev/null
+    eval (ssh-agent -c)
+    ssh-add -l >/dev/null 2>&1
+    ssh-add ~/.ssh/id_mediaserver >/dev/null 2>&1
+end
