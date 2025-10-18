@@ -19,7 +19,7 @@
       "M-%"     #'query-replace-regexp
       "M-["     #'pop-global-mark
       "M-j"     #'bso/join-line
-      "C-x -k"  #'kill-this-buffer
+      "C-x k"  #'kill-current-buffer
       "M-z"     #'zap-up-to-char
       "M-Z"     #'zap-to-char
       "M-\\" #'bso/delete-horizontal-space-dwim

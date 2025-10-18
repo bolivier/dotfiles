@@ -5,6 +5,12 @@
   "modules-center": ["clock"],
   "modules-right": ["custom/nordvpn", "pulseaudio"],
 
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+
   "hyprland/workspaces": {},
 
   "custom/nordvpn": {
@@ -25,15 +31,9 @@
 
   "pulseaudio": {
     "format": "{volume}% {icon}",
-    "format-bluetooth": "{volume}% {iacon}",
+    "format-bluetooth": "{volume}% {icon}",
     "format-muted": "",
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
       "default": ["", ""]
     },
     "scroll-step": 1,

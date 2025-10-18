@@ -131,3 +131,5 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
 
 (set-file-template! "\\.test\\.tsx?"   :mode 'typescript-tsx-mode
   :trigger "__test.js")
+
+(add-hook! markdown-mode 'auto-fill-mode)

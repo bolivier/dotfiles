@@ -1,5 +1,6 @@
 theme = tokyonight
 
-font-family = "Comic Code Ligatures"
+# font-family = "Comic Code Ligatures"
+# font-family = "Liberation Mono"
 
 font-size = 10

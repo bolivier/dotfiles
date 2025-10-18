@@ -6,6 +6,7 @@
 (load! "config/org")
 (load! "config/editing")
 (load! "config/clojure")
+(load! "config/paredit")
 (load! "config/web")
 (load! "config/apps")
 ;; (load! "config/evil")

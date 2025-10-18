@@ -35,14 +35,6 @@
    "C-<right>" #'sp-slurp-hybrid-sexp
    "C-<left>" #'sp-forward-barf-sexp))
 
-(use-package! apheleia
-  :config
-  (setf (alist-get 'zprint apheleia-formatters)
-        '("zprint"))
-  (setf (alist-get 'clojure-mode apheleia-mode-alist) 'zprint
-        (alist-get 'clojure-ts-mode apheleia-mode-alist) 'zprint))
-
-
 (use-package! dired
   :config (map!
            :map dired-mode-map
@@ -113,8 +105,17 @@
   (map!
    "M-=" #'er/expand-region
    "M-+" #'er/contract-region))
+
 (use-package! persp-mode
-  :config
+  :init
+
+  (defun bso/persp-kill-this-buffer ()
+    "Kill the current buffer (only in this perspective)"
+    (interactive)
+    (persp-kill-buffer (current-buffer)))
+
+  (map! "C-x k" #'bso/persp-kill-this-buffer)
+
   (unless (get-buffer "*scratch*")
     (generate-new-buffer "*scratch*")))
 
