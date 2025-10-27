@@ -64,21 +64,34 @@ Return nil if not inside a project."
       (error nil)))
 
   (defun bso/cider-def-var ()
-    "Read the previous sexp and define it as (def NAME <sexp>) in Clojure using CIDER."
+    "Read the previous sexp and define
+it as (def NAME <sexp>) in Clojure using CIDER."
     (interactive)
     (save-excursion
-      (let ((sexp (progn
-                    (backward-sexp)
-                    (thing-at-point 'sexp t)))
-            (name (if (bso/cider-inside-let-p)
-                      (progn
-                        (backward-sexp)
-                        (thing-at-point 'symbol))
-                    (read-string "Var name: ")
-                    )))
-        (cider-interactive-eval
-         (format "(def %s %s)" name sexp)))))
+      (let* ((sexp (save-excursion
+                     (paredit-backward 1)
+                     (thing-at-point 'sexp t))))
 
+        (cond
+         ((save-excursion
+            (paredit-backward 2)
+            (looking-at "{:keys"))
+          (progn
+            (paredit-backward 2)
+            (paredit-forward-down 2)
+            (let ((names (list)))
+              (while (not (looking-at "}"))
+                (push (thing-at-point 'symbol t) names)
+                (paredit-forward)
+                (forward-char 1))
+              (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
+
+         (t    (let ((name (if (bso/cider-inside-let-p)
+                               (progn
+                                 (backward-sexp)
+                                 (thing-at-point 'symbol t))
+                             (read-string "Var name: "))))
+                 (cider-interactive-eval (format "(def %s %s)" name sexp))))))))
 
   (defun save-clojure-buffer (&rest x)
     (save-buffer 0))
@@ -104,5 +117,4 @@ Otherwise move forward sentence, like normal"
     (save-excursion
       (when (looking-at (rx (any "({[")))
         (paredit-forward))
-      (apply f args)))
-  )
+      (apply f args))))

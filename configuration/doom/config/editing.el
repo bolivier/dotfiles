@@ -121,16 +121,14 @@
 
 
 
-(use-package! harpoon
-  :init
-  (map! :map general-override-mode-map
-        "C-c j j" #'harpoon-quick-menu-hydra
-        "C-c j a" #'harpoon-add-file
-        "C-c j 1" #'harpoon-go-to-1
-        "C-c j 2" #'harpoon-go-to-2
-        "C-c j 3" #'harpoon-go-to-3
-        "C-c j 4" #'harpoon-go-to-4
-        "C-c j 5" #'harpoon-go-to-5))
+(map! :map general-override-mode-map
+      "C-c j j" #'harpoon-quick-menu-hydra
+      "C-c j a" #'harpoon-add-file
+      "C-c j 1" #'harpoon-go-to-1
+      "C-c j 2" #'harpoon-go-to-2
+      "C-c j 3" #'harpoon-go-to-3
+      "C-c j 4" #'harpoon-go-to-4
+      "C-c j 5" #'harpoon-go-to-5)
 
 
 

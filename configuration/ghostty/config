@@ -1,6 +1,3 @@
-theme = tokyonight
-
-# font-family = "Comic Code Ligatures"
-# font-family = "Liberation Mono"
-
+theme = Monokai Classic
+font-family = "Comic Code Ligatures"
 font-size = 10
