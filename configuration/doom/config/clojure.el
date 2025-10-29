@@ -63,35 +63,35 @@ Return nil if not inside a project."
           (looking-at "(let"))
       (error nil)))
 
-  (defun bso/cider-def-var ()
-    "Read the previous sexp and define
+  (defun bso/cider-def-var () "Read the previous sexp and define
 it as (def NAME <sexp>) in Clojure using CIDER."
-    (interactive)
-    (save-excursion
-      (let* ((sexp (save-excursion
-                     (paredit-backward 1)
-                     (thing-at-point 'sexp t))))
+         (interactive)
+         (save-excursion
+           (with-current-buffer "template_renderer.clj"
+             (let* ((sexp (save-excursion
+                            (paredit-backward 1)
+                            (thing-at-point 'sexp t))))
 
-        (cond
-         ((save-excursion
-            (paredit-backward 2)
-            (looking-at "{:keys"))
-          (progn
-            (paredit-backward 2)
-            (paredit-forward-down 2)
-            (let ((names (list)))
-              (while (not (looking-at "}"))
-                (push (thing-at-point 'symbol t) names)
-                (paredit-forward)
-                (forward-char 1))
-              (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
+               (cond
+                ((save-excursion
+                   (paredit-backward 2)
+                   (looking-at "{:keys"))
+                 (progn
+                   (paredit-backward 2)
+                   (paredit-forward-down 2)
+                   (let ((names (list)))
+                     (while (not (looking-at "}"))
+                       (push (thing-at-point 'symbol t) names)
+                       (paredit-forward)
+                       (forward-char 1))
+                     (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
 
-         (t    (let ((name (if (bso/cider-inside-let-p)
-                               (progn
-                                 (backward-sexp)
-                                 (thing-at-point 'symbol t))
-                             (read-string "Var name: "))))
-                 (cider-interactive-eval (format "(def %s %s)" name sexp))))))))
+                (t    (let ((name (if (bso/cider-inside-let-p)
+                                      (progn
+                                        (paredit-backward 2)
+                                        (thing-at-point 'symbol t))
+                                    (read-string "Var name: "))))
+                        (cider-interactive-eval (format "(def %s %s)" name sexp)))))))))
 
   (defun save-clojure-buffer (&rest x)
     (save-buffer 0))
