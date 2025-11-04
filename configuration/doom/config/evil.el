@@ -33,7 +33,7 @@ smarter version of the regular behavior"
     (evil-insert 1)))
 
 (after! (evil cider)
-  (defun evil-cider-update-cursor-for-eval (f &rest args)
+  (defun evil-lisp-update-cursor-for-eval (f &rest args)
     (interactive)
     (unless (eq evil-state 'normal)
       (funcall f args)
@@ -48,8 +48,9 @@ smarter version of the regular behavior"
                                  (paredit-forward)
                                  (funcall f args)))))))
 
-  (advice-add 'cider-eval-last-sexp :around #'evil-cider-update-cursor-for-eval)
-  (advice-add 'cider-pprint-eval-last-sexp :around #'evil-cider-update-cursor-for-eval)
+  (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
+  (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
+  (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   )
 
 (after! (evil harpoon)

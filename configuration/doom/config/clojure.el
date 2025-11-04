@@ -9,6 +9,7 @@
         "C-c C-r U" #'clojure-unwind-all))
 
 (add-hook! clojure-mode
+  (require 'apheleia)
   (setf (alist-get 'zprint apheleia-formatters)
         '("zprint"))
   (setf (alist-get 'clojure-mode apheleia-mode-alist) 'zprint
@@ -52,7 +53,11 @@ Return nil if not inside a project."
     (interactive)
     (save-some-buffers t)
     (cider-interactive-eval
-     "(ns user) (require '[integrant.repl :as ir]) (ir/reset)"))
+     "(ns user)
+      (require '[integrant.repl :as ir]
+               '[clojure.tools.namespace.repl :refer [refresh-all]])
+      (do (refresh-all)
+          (ir/reset-all))"))
 
   (defun bso/cider-inside-let-p ()
     "Check if I'm immediately inside a let binding"
@@ -67,31 +72,30 @@ Return nil if not inside a project."
 it as (def NAME <sexp>) in Clojure using CIDER."
          (interactive)
          (save-excursion
-           (with-current-buffer "template_renderer.clj"
-             (let* ((sexp (save-excursion
-                            (paredit-backward 1)
-                            (thing-at-point 'sexp t))))
+           (let* ((sexp (save-excursion
+                          (paredit-backward 1)
+                          (thing-at-point 'sexp t))))
 
-               (cond
-                ((save-excursion
-                   (paredit-backward 2)
-                   (looking-at "{:keys"))
-                 (progn
-                   (paredit-backward 2)
-                   (paredit-forward-down 2)
-                   (let ((names (list)))
-                     (while (not (looking-at "}"))
-                       (push (thing-at-point 'symbol t) names)
-                       (paredit-forward)
-                       (forward-char 1))
-                     (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
+             (cond
+              ((save-excursion
+                 (paredit-backward 2)
+                 (looking-at "{:keys"))
+               (progn
+                 (paredit-backward 2)
+                 (paredit-forward-down 2)
+                 (let ((names (list)))
+                   (while (not (looking-at "}"))
+                     (push (thing-at-point 'symbol t) names)
+                     (paredit-forward)
+                     (forward-char 1))
+                   (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
 
-                (t    (let ((name (if (bso/cider-inside-let-p)
-                                      (progn
-                                        (paredit-backward 2)
-                                        (thing-at-point 'symbol t))
-                                    (read-string "Var name: "))))
-                        (cider-interactive-eval (format "(def %s %s)" name sexp)))))))))
+              (t    (let ((name (if (bso/cider-inside-let-p)
+                                    (progn
+                                      (paredit-backward 2)
+                                      (thing-at-point 'symbol t))
+                                  (read-string "Var name: "))))
+                      (cider-interactive-eval (format "(def %s %s)" name sexp))))))))
 
   (defun save-clojure-buffer (&rest x)
     (save-buffer 0))

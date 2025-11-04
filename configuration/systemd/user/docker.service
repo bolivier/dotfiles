@@ -1,0 +1,15 @@
+[Unit]
+Description=Docker Application Container Engine (User)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/dockerd --host=unix:///run/user/%U/docker.sock
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=2
+StartLimitBurst=3
+StartLimitInterval=60s
+
+[Install]
+WantedBy=default.target
