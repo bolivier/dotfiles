@@ -13,7 +13,32 @@
   (setf (alist-get 'zprint apheleia-formatters)
         '("zprint"))
   (setf (alist-get 'clojure-mode apheleia-mode-alist) 'zprint
-        (alist-get 'clojure-ts-mode apheleia-mode-alist) 'zprint))
+        (alist-get 'clojure-ts-mode apheleia-mode-alist) 'zprint)
+
+  ;; add testing template -- this might need to be after clj-refactor
+  (setq cljr-clojure-test-declaration "[clojure.test :refer [deftest is]]")
+  (defun cljr--add-test-declarations ()
+    "Rewritten version of the clj-refactor version that can be more easily modified (by me)."
+    (save-excursion
+      (let* ((ns (clojure-find-ns))
+             (source-ns (cljr--find-source-ns-of-test-ns ns (buffer-file-name))))
+        (cljr--insert-in-ns ":require")
+        (when source-ns
+          (insert "[" source-ns " :as "
+                  cljr-clojure-test-namespace-under-test-alias "]"))
+        (cljr--insert-in-ns ":require")
+        (insert (cond
+                 ((cljr--project-depends-on-p "midje")
+                  cljr-midje-test-declaration)
+                 ((cljr--project-depends-on-p "expectations")
+                  cljr-expectations-test-declaration)
+                 ((cljr--cljs-file-p)
+                  cljr-cljs-clojure-test-declaration)
+                 ((cljr--cljc-file-p)
+                  cljr-cljc-clojure-test-declaration)
+                 (t cljr-clojure-test-declaration)))
+        (insert "\n[matcher.combinators]")) ;; <= added by me
+      (indent-region (point-min) (point-max)))))
 
 (after! cider
   (setq-default cider-clojure-cli-aliases ":dev:test")
