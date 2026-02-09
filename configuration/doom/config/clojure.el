@@ -37,7 +37,7 @@
                  ((cljr--cljc-file-p)
                   cljr-cljc-clojure-test-declaration)
                  (t cljr-clojure-test-declaration)))
-        (insert "\n[matcher.combinators]")) ;; <= added by me
+        (insert "\n[matcher.combinators.test]")) ;; <= added by me
       (indent-region (point-min) (point-max)))))
 
 (after! cider
