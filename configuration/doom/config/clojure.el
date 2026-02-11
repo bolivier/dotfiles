@@ -84,13 +84,15 @@ Return nil if not inside a project."
       (do (refresh-all)
           (ir/reset-all))"))
 
-  (defun bso/cider-inside-let-p ()
+  (defun bso/cider-inside-let-like-p ()
     "Check if I'm immediately inside a let binding"
     (interactive)
     (condition-case err
         (save-excursion
           (paredit-backward-up 2)
-          (looking-at "(let"))
+          (or
+           (looking-at "(let")
+           (looking-at "(loop")))
       (error nil)))
 
   (defun bso/cider-def-var () "Read the previous sexp and define
@@ -115,7 +117,7 @@ it as (def NAME <sexp>) in Clojure using CIDER."
                      (forward-char 1))
                    (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
 
-              (t    (let ((name (if (bso/cider-inside-let-p)
+              (t    (let ((name (if (bso/cider-inside-let-like-p)
                                     (progn
                                       (paredit-backward 2)
                                       (thing-at-point 'symbol t))
