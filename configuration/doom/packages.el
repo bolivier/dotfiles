@@ -61,3 +61,4 @@
 (package! tsi :recipe (:host github :repo "orzechowskid/tsi.el"))
 (package! yaml-pro :recipe (:host github :repo "zkry/yaml-pro"))
 (package! jj-mode :recipe (:host github :repo "bolivier/jj-mode.el"))
+(package! majutsu :recipe (:host github :repo "0WD0/majutsu"))
