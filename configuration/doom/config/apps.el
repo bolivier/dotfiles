@@ -1,4 +1,4 @@
-;;; ../../code/dotfiles/configuration/doom/config/apps.el -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
 (use-package! magit
   :init

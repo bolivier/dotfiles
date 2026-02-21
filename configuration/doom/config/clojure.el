@@ -56,7 +56,7 @@
         "<down>" #'cider-repl-next-input
         "C-c o"  #'cider-repl-clear-buffer)
 
-  (advice-add 'cider-eval-buffer :before #'+format/save-buffer)
+  ;; (advice-remove 'cider-eval-buffer #'save-buffer)
   (advice-add 'cider-pprint-eval-last-sexp :around #'skip-to-closing-if-at-opening)
 
   (defun clojure-project-root-path (&optional dir-name)
@@ -118,6 +118,12 @@ it as (def NAME <sexp>) in Clojure using CIDER."
                    (--map (cider-interactive-eval (format "(def %s (:%s %s))" it it sexp)) names))))
 
               (t    (let ((name (if (bso/cider-inside-let-like-p)
+                                    (progn
+                                      (paredit-backward 2)
+                                      (thing-at-point 'symbol t))
+                                  (read-string "Var name: "))))
+                      (cider-interactive-eval (format "(def %s %s)" name sexp))))))))
+              (t    (let ((name (if (bso/cider-inside-let-p)
                                     (progn
                                       (paredit-backward 2)
                                       (thing-at-point 'symbol t))

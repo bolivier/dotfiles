@@ -1,10 +1,10 @@
 {
   "layer": "top", // Waybar at top layer
   // top left bottom right
-  "margin": "4",
+  "margin": "5 5 0 5",
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["custom/nordvpn", "pulseaudio"],
+  "modules-right": ["custom/nordvpn", "pulseaudio", "battery"],
 
   "pulseaudio/slider": {
     "min": 0,

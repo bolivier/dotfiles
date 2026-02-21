@@ -1,4 +1,4 @@
-  ;; Home row mods QWERTY example with more complexity.
+;; Home row mods QWERTY example with more complexity.
 ;; Some of the changes from the basic example:
 ;; - when a home row mod activates tap, the home row mods are disabled
 ;;   while continuing to type rapidly
