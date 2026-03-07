@@ -116,7 +116,29 @@ For example, pressing C-x C-s will insert the string \"C-x C-s\"."
   (let ((keys (read-key-sequence "Press key sequence: ")))
     (insert "\"" (key-description keys) "\"")))
 
+(setq initial-major-mode 'lisp-interaction-mode)
+
 (after! paredit
-  (map! :mode emacs-lisp-mode
-        "C-c C-c" #'eros-eval-defun)
   (add-hook! (emacs-lisp-mode lisp-interaction-mode) #'enable-paredit-mode))
+
+(after! eros
+  (defun bso/elisp-conditional-eval ()
+    "Eval region if active, forward sexp if at opening paren,
+last sexp if at closing paren."
+    (interactive)
+    (save-excursion
+      (cond
+       ((use-region-p) (eval-region (mark) (point)))
+       ((looking-at (rx (any "({["))) (paredit-forward) (eros-eval-last-sexp nil))
+       ((looking-back (rx (any "]})"))) (eros-eval-last-sexp nil))
+       (t (message "Could not find anything to eval.")))))
+
+  (map! :map emacs-lisp-mode-map
+        "C-c C-c" #'eros-eval-defun
+        "M-e" #'bso/elisp-conditional-eval
+        "M-E" #'eval-buffer
+
+        :map lisp-interaction-mode-map
+        "C-c C-c" #'eros-eval-defun
+        "M-e" #'bso/elisp-conditional-eval
+        "M-E" #'eval-buffer))
