@@ -23,6 +23,11 @@
   (setq-default cider-clojure-cli-aliases ":dev:test")
   (setq cider-clojure-cli-aliases ":dev:test")
 
+  (add-hook! cider-connected-hook
+    (when (and (bound-and-true-p persp-mode)
+               (cider-current-repl))
+      (persp-add-buffer (cider-current-repl))))
+
   (map! :map cider-mode-map
         "C-c l e v" #'bso/cider-def-var
         "<f4>" #'bso/cider-restart
