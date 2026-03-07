@@ -1,5 +1,7 @@
 ;;; ../../code/dotfiles/configuration/doom/config/clojure.el -*- lexical-binding: t; -*-
 
+(add-hook! (clojure-mode cider-repl-mode) #'enable-paredit-mode)
+
 (after! clojure-mode
   (setq! lsp-clojure-server-command '("clojure-lsp"))
   (setq! clojure-toplevel-inside-comment-form t)
