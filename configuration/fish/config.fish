@@ -12,7 +12,6 @@ function doom-emacs
 end
 
 zoxide init fish | source
-mise activate fish | source
 
 set -gx EDITOR nvim
 
@@ -24,34 +23,6 @@ function ls
     eza --long --group-directories-first --binary --no-permissions --octal-permissions --icons $argv
 end
 
-function ocd
-    command cd $argv
-end
-
-function cd
-    z $argv
-end
-
-# if "usage" is not installed show an error
-if ! command -v usage &>/dev/null
-    echo >&2
-    echo "Error: usage CLI not found. This is required for completions to work in mise." >&2
-    echo "See https://usage.jdx.dev for more information." >&2
-    return 1
-end
-
-if ! set -q _usage_spec_mise_2025_7_2
-    set -g _usage_spec_mise_2025_7_2 (mise usage | string collect)
-end
-set -l tokens
-if commandline -x >/dev/null 2>&1
-    complete -xc mise -a '(usage complete-word --shell fish -s "$_usage_spec_mise_2025_7_2" -- (commandline -xpc) (commandline -t))'
-else
-    complete -xc mise -a '(usage complete-word --shell fish -s "$_usage_spec_mise_2025_7_2" -- (commandline -opc) (commandline -t))'
-end
-
-if not pgrep -u $USER ssh-agent >/dev/null
-    eval (ssh-agent -c)
-    ssh-add -l >/dev/null 2>&1
-    ssh-add ~/.ssh/id_mediaserver >/dev/null 2>&1
+if command -q mise
+    source ~/.config/fish/mise.fish  # no longer in conf.d/
 end
