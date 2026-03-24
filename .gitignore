@@ -5,3 +5,5 @@
 /.nrepl-port
 /.clj-kondo/.cache
 /configuration/fish/fish_variables
+# These are proprietary
+/fonts/*.otf

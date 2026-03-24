@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ inputs, config, pkgs, ... }: {
   home.username = "brandon";
   home.homeDirectory = "/home/brandon";
   home.stateVersion = "25.11";
@@ -17,19 +17,38 @@
     neovim
     git
     emacs
-    hyprland 
+    hyprland
     ghostty
     eza
+    fzf
+    gcc
+    curl
+    ripgrep
+    fd
+    lazygit
+    ouch
   ];
 
-  home.file.".config/fish".source = 
+  imports = [
+    inputs.noctalia.homeModules.default
+  ];
+
+  programs.noctalia-shell = {
+    enable = true;
+  };
+
+  home.file.".config/fish".source =
   	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/fish";
 
-  home.file.".config/doom".source = 
+  home.file.".config/doom".source =
   	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/doom";
 
-  home.file.".config/hypr".source = 
+  home.file.".config/hypr".source =
   	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/hypr";
+
+  home.file.".config/noctalia".source =
+  	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/noctalia";
+
   programs.ghostty.enable = true;
 
   home.shell.enableFishIntegration = true;
