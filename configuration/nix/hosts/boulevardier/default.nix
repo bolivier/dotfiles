@@ -12,11 +12,9 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/security.nix
+    ../../modules/bluetooth.nix
     ../../modules/base-programs.nix
   ];
-
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -39,12 +37,6 @@
   # TTY keyboard stuff.  Probably not necessary but could be safer.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-  };
 
   programs.hyprland.enable = true;
 
