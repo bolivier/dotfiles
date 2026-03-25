@@ -11,6 +11,7 @@
     wget
     brave
     neovim
+    wl-clipboard
     git
   ];
 
