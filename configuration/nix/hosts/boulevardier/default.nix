@@ -11,6 +11,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/hyprland.nix
     ../../modules/security.nix
     ../../modules/bluetooth.nix
     ../../modules/base-programs.nix
@@ -19,6 +20,8 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # skip the generations menu.  Spam <space> if there is an issue.
+  boot.loader.timeout = 0;
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -37,8 +40,6 @@
   # TTY keyboard stuff.  Probably not necessary but could be safer.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
-
-  programs.hyprland.enable = true;
 
   # Enable fish shell for usage
 
