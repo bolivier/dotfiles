@@ -33,6 +33,10 @@
           (println (str  "Destination file exists for " module " => " dest))
           (fs/create-sym-link dest src))))))
 
+(defn github-setup []
+  (p/shell "gh auth login")
+  (p/shell "gh ssh-key add ~/.ssh/<add-key-here-dynamically>"))
+
 (defn brew-install []
   (if-not mac?
     (println "Can only use `brew-install` on MacOS")
