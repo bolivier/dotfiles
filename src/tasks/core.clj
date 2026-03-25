@@ -41,7 +41,7 @@
   (p/shell (fs/expand-home "~/.config/emacs/bin/doom")
             "install"))
 
-(defn github-setup []
+(defn setup-github []
   (p/shell "gh auth login")
   (p/shell "gh ssh-key add ~/.ssh/<add-key-here-dynamically>"))
 

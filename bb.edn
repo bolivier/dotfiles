@@ -5,5 +5,7 @@
 
   brew-install (t/brew-install)
   
-  install-doom-emacs (t/install-doom-emacs)}}
+  install-doom-emacs (t/install-doom-emacs)
+
+  setup-github (t/setup-github)}}
 
