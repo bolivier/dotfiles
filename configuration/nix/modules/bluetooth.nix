@@ -17,6 +17,9 @@
 
   services.blueman.enable = true;
 
+  # required code for headphones
+  environment.systemPackages = [ pkgs.ldacbt ];
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
