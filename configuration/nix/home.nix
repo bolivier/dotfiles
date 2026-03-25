@@ -16,7 +16,6 @@
     brave
     bluetui
     pavucontrol
-    neovim
     ghostty
     lazygit
     nixd

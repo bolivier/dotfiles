@@ -17,10 +17,12 @@ in
     curl
     ripgrep
     fd
+    neovim
     ouch
     emacs-with-vterm
     claude-code
   ];
+  home.sessionVariables.EDITOR = "nvim";
 
   home.file.".config/doom".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/doom";
