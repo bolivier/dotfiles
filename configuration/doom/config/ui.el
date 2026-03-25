@@ -21,10 +21,16 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!sd
-(setq doom-font                (font-spec :family "Comic Code" :size 16)
-      doom-variable-pitch-font (font-spec :family "Comic Code") ; inherits `doom-font''s :size
+
+(setq coding-font (cl-find-if (lambda (f)
+				(find-font (font-spec :name f)))
+			      '("Comic Code"
+				"Fira Code")))
+
+(setq doom-font                (font-spec :family coding-font :size 16)
+      doom-variable-pitch-font (font-spec :family coding-font ) ; inherits `doom-font''s :size
       doom-symbol-font         (font-spec :family "Noto Color Emoji" :size 16)
-      doom-big-font            (font-spec :family "Comic Code" :size 18)
+      doom-big-font            (font-spec :family coding-font :size 18)
       doom-font-increment      1)
 
 ;; Emoji fix

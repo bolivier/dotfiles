@@ -21,6 +21,7 @@
     lazygit
     nixd
     nixfmt
+    fira-code
   ];
 
   imports = [
