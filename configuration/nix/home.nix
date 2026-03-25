@@ -17,16 +17,8 @@
     bluetui
     pavucontrol
     neovim
-    git
-    emacs
     ghostty
-    fzf
-    gcc
-    curl
-    ripgrep
-    fd
     lazygit
-    ouch
     nixd
     nixfmt
   ];
@@ -34,6 +26,7 @@
   imports = [
     ./home-modules/shell/fish.nix
     ./home-modules/clojure/default.nix
+    ./home-modules/dev-env/default.nix
     inputs.noctalia.homeModules.default
   ];
 
@@ -41,24 +34,9 @@
     enable = true;
   };
 
-  home.file.".config/doom".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/doom";
-
   home.file.".config/hypr".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/hypr";
 
   home.file.".config/noctalia".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/noctalia";
-
-  programs.ghostty.enable = true;
-
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "Brandon Olivier";
-      email = "brandon@brandonolivier.com";
-    };
-  };
-
-  programs.jujutsu.enable = true;
 }
