@@ -22,6 +22,7 @@
     nixd
     nixfmt
     fira-code
+    slack
   ];
 
   imports = [
