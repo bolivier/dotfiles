@@ -39,14 +39,14 @@ smarter version of the regular behavior"
       (funcall f args)
       (cond ((looking-at ")") (save-excursion
                                 (evil-save-state
-                                 (evil-emacs-state)
-                                 (forward-char 1)
-                                 (funcall f args))))
+                                  (evil-emacs-state)
+                                  (forward-char 1)
+                                  (funcall f args))))
             ((looking-at "(") (save-excursion
                                 (evil-save-state
-                                 (evil-emacs-state)
-                                 (paredit-forward)
-                                 (funcall f args)))))))
+                                  (evil-emacs-state)
+                                  (paredit-forward)
+                                  (funcall f args)))))))
 
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
