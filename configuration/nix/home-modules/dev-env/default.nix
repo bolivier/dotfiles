@@ -19,6 +19,7 @@ in
     fd
     ouch
     emacs-with-vterm
+    claude-code
   ];
 
   home.file.".config/doom".source =
