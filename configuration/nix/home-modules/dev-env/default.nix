@@ -41,6 +41,10 @@ in
   };
 
   programs.jujutsu.enable = true;
+  programs.jujutsu.settings.user = {
+    name = "Brandon Olivier";
+    email = "brandon@brandonolivier.com";
+  };
   programs.ghostty = {
     enable = true;
   };
