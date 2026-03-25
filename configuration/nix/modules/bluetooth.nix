@@ -17,14 +17,18 @@
 
   services.blueman.enable = true;
 
-  # required code for headphones
-  environment.systemPackages = [ pkgs.ldacbt ];
-
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
 
-    wireplumber.enable = true;
+    wireplumber = {
+      enable = true;
+      extraConfig."11-bluetooth-policy" = {
+        "monitor.bluez.properties" = {
+          "bluez5.codecs" = [ "aac" "sbc" "sbc_xq" ];
+        };
+      };
+    };
   };
 }

@@ -63,3 +63,9 @@ smarter version of the regular behavior"
         "3" #'harpoon-go-to-3
         "4" #'harpoon-go-to-4
         "5" #'harpoon-go-to-5))
+
+(use-package! majutsu
+  :demand t
+  :config
+  (map! :leader
+        "g g" #'majutsu))
