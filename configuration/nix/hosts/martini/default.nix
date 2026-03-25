@@ -15,6 +15,7 @@
     ../../modules/security.nix
     ../../modules/bluetooth.nix
     ../../modules/base-programs.nix
+    ../../modules/kanata.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

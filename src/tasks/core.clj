@@ -42,8 +42,10 @@
             "install"))
 
 (defn setup-github []
-  (p/shell "gh auth login")
-  (p/shell "gh ssh-key add ~/.ssh/<add-key-here-dynamically>"))
+  (when (pos? (:exit (p/shell "gh auth status")))
+    (p/shell "gh auth login"))
+  (p/shell
+   ["gh" "ssh-key" "add" (fs/expand-home "~/.ssh/id_ed25519.pub")]))
 
 (defn brew-install []
   (if-not mac?
