@@ -3,5 +3,7 @@
  {:requires ([tasks.core :as t])
   link-dotfiles (t/link-dotfiles)
 
-  brew-install (t/brew-install)}}
+  brew-install (t/brew-install)
+  
+  install-doom-emacs (t/install-doom-emacs)}}
 

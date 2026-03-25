@@ -33,6 +33,14 @@
           (println (str  "Destination file exists for " module " => " dest))
           (fs/create-sym-link dest src))))))
 
+(defn install-doom-emacs []
+  (p/shell 
+    [
+    "git" "clone" "--depth" "1" "https://github.com/doomemacs/doomemacs" 
+    (fs/expand-home "~/.config/emacs")])
+  (p/shell (fs/expand-home "~/.config/emacs/bin/doom")
+            "install"))
+
 (defn github-setup []
   (p/shell "gh auth login")
   (p/shell "gh ssh-key add ~/.ssh/<add-key-here-dynamically>"))
