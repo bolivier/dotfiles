@@ -10,3 +10,4 @@
 (load! "config/web")
 (load! "config/apps")
 (load! "config/evil")
+(load! "config/nix")
