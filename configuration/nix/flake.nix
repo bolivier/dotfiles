@@ -23,7 +23,7 @@
     nixosConfigurations.boulevardier = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix
+        ./hosts/boulevardier/default.nix
         home-manager.nixosModules.home-manager
         {
         home-manager.useGlobalPkgs = true;

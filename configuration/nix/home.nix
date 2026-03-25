@@ -1,4 +1,10 @@
-{ inputs, config, pkgs, ... }: {
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
   home.username = "brandon";
   home.homeDirectory = "/home/brandon";
   home.stateVersion = "25.11";
@@ -6,10 +12,6 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    babashka
-    clojure
-    clojure-lsp
-    jdk
     socat
     brave
     bluetui
@@ -17,9 +19,7 @@
     neovim
     git
     emacs
-    hyprland
     ghostty
-    eza
     fzf
     gcc
     curl
@@ -27,9 +27,13 @@
     fd
     lazygit
     ouch
+    nixd
+    nixfmt
   ];
 
   imports = [
+    ./home-modules/shell/fish.nix
+    ./home-modules/clojure/default.nix
     inputs.noctalia.homeModules.default
   ];
 
@@ -37,21 +41,16 @@
     enable = true;
   };
 
-  home.file.".config/fish".source =
-  	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/fish";
-
   home.file.".config/doom".source =
-  	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/doom";
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/doom";
 
   home.file.".config/hypr".source =
-  	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/hypr";
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/hypr";
 
   home.file.".config/noctalia".source =
-  	config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/noctalia";
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/noctalia";
 
   programs.ghostty.enable = true;
-
-  home.shell.enableFishIntegration = true;
 
   programs.git = {
     enable = true;
@@ -62,5 +61,4 @@
   };
 
   programs.jujutsu.enable = true;
-  programs.zoxide.enable = true;
 }

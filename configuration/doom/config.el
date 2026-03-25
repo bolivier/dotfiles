@@ -9,4 +9,4 @@
 (load! "config/paredit")
 (load! "config/web")
 (load! "config/apps")
-;; (load! "config/evil")
+(load! "config/evil")
