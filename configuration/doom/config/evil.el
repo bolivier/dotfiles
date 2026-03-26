@@ -35,25 +35,22 @@ smarter version of the regular behavior"
 (after! (evil cider)
   (defun evil-lisp-update-cursor-for-eval (f &rest args)
     (interactive)
-    (unless (eq evil-state 'normal)
-      (funcall f args)
-      (cond ((looking-at ")") (save-excursion
-                                (evil-save-state
-                                  (evil-emacs-state)
-                                  (forward-char 1)
-                                  (funcall f args))))
-            ((looking-at "(") (save-excursion
-                                (evil-save-state
-                                  (evil-emacs-state)
-                                  (paredit-forward)
-                                  (funcall f args)))))))
+    (if (and
+         (evil-normal-state-p)
+         (looking-at (rx (or "(" "[" "{"))))
+        (save-excursion
+          (paredit-forward)
+          (funcall f args))
+      (funcall f args)))
 
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   )
 
-(after! (evil harpoon)
+(use-package! harpoon
+  :demand t
+  :config
   (map! :map general-override-mode-map
         :leader :prefix "j"
         "j" #'harpoon-quick-menu-hydra
