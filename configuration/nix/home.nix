@@ -20,6 +20,5 @@
     ./home-modules/clojure/default.nix
     ./home-modules/dev-env/default.nix
     ./home-modules/desktop-env/default.nix
-    ./home-modules/games/default.nix
   ];
 }
