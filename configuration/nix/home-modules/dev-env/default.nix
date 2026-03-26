@@ -7,21 +7,27 @@
 
 let
   emacs-with-vterm = (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]);
+  user-settings = {
+    name = "Brandon Olivier";
+    email = "brandon@brandonolivier.com";
+  };
 in
 
 {
 
   home.packages = with pkgs; [
     bat
-    fzf
-    curl
-    ripgrep
-    fd
-    neovim
-    ouch
-    emacs-with-vterm
     claude-code
+    emacs-with-vterm
+    fira-code
+    fzf
+    lazygit
+    neovim
+    nixd
+    nixfmt
+    nodePackages.prettier
   ];
+
   home.sessionVariables.EDITOR = "nvim";
 
   home.file.".config/doom".source =
@@ -29,10 +35,7 @@ in
 
   programs.git = {
     enable = true;
-    settings.user = {
-      name = "Brandon Olivier";
-      email = "brandon@brandonolivier.com";
-    };
+    settings.user = user-settings;
   };
 
   programs.gh = {
@@ -43,10 +46,7 @@ in
   };
 
   programs.jujutsu.enable = true;
-  programs.jujutsu.settings.user = {
-    name = "Brandon Olivier";
-    email = "brandon@brandonolivier.com";
-  };
+  programs.jujutsu.settings.user = user-settings;
   programs.ghostty = {
     enable = true;
   };

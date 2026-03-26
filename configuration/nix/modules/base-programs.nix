@@ -8,11 +8,15 @@
 {
 
   environment.systemPackages = with pkgs; [
-    wget
     brave
-    neovim
-    wl-clipboard
+    curl
+    fd
     git
+    neovim
+    ouch
+    ripgrep
+    wget
+    wl-clipboard
   ];
 
   # available shells
