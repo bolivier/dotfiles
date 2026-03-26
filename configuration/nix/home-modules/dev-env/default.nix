@@ -47,6 +47,17 @@ in
 
   programs.jujutsu.enable = true;
   programs.jujutsu.settings.user = user-settings;
+  programs.jujutsu.settings.aliases = {
+    tug = [
+      "bookmark"
+      "move"
+      "--from"
+      "heads(::@- & bookmarks())"
+      "--to"
+      "@-"
+    ];
+  };
+
   programs.ghostty = {
     enable = true;
   };
