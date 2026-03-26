@@ -9,7 +9,10 @@
   users.users.brandon = {
     shell = pkgs.fish;
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
     packages = with pkgs; [
       tree
     ];
