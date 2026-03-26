@@ -30,5 +30,6 @@ With prefix ARG, prompt to edit the full command before running."
   :demand t
   :config
   (add-to-list 'compilation-finish-functions #'bso/nix-rebuild-finish)
-  (map! 
+  (map!
+   :map general-override-mode-map
    :localleader "r" #'bso/nix-rebuild-config))

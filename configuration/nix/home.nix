@@ -23,6 +23,7 @@
     nixfmt
     fira-code
     slack
+    nodePackages.prettier
   ];
 
   imports = [
