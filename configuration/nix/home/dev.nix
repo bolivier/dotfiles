@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   emacs-with-vterm = (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]);
@@ -14,15 +9,20 @@ let
 in
 
 {
-
   home.packages = with pkgs; [
-    bat
+    # Editors
     claude-code
     emacs-with-vterm
-    fira-code
-    fzf
     lazygit
-    neovim
+
+    # Clojure
+    babashka
+    clojure
+    clojure-lsp
+    jdk
+
+    # Formatting / LSP
+    fira-code
     nixd
     nixfmt
     nodePackages.prettier
@@ -58,7 +58,5 @@ in
     ];
   };
 
-  programs.ghostty = {
-    enable = true;
-  };
+  programs.ghostty.enable = true;
 }

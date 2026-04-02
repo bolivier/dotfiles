@@ -1,11 +1,19 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
+  # Hyprland + display manager
+  programs.hyprland.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
+        user = "greeter";
+      };
+    };
+  };
+
+  # Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   hardware.bluetooth.settings = {
@@ -14,14 +22,13 @@
       Experimental = true;
     };
   };
-
   services.blueman.enable = true;
 
+  # Audio
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
-
     wireplumber = {
       enable = true;
       extraConfig."11-bluetooth-policy" = {
@@ -31,4 +38,12 @@
       };
     };
   };
+
+  # Keyring
+  environment.systemPackages = with pkgs; [
+    libsecret
+    seahorse
+  ];
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
 }

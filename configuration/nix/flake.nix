@@ -1,6 +1,5 @@
 {
   inputs = {
-    # Use `nix flake update` to update the flake to the latest revision of the chosen release channel.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -19,6 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
   outputs =
     inputs@{
       self,
@@ -26,32 +26,62 @@
       home-manager,
       ...
     }:
+    let
+      mkNixos =
+        {
+          hostModule,
+          homeModules,
+          system ? "x86_64-linux",
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            hostModule
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.brandon = {
+                imports = homeModules;
+              };
+              home-manager.extraSpecialArgs = { inherit inputs; };
+            }
+          ];
+        };
+    in
     {
-      nixosConfigurations.boulevardier = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/boulevardier/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.brandon = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
+      nixosConfigurations.boulevardier = mkNixos {
+        hostModule = ./hosts/boulevardier;
+        homeModules = [
+          ./home/core.nix
+          ./home/dev.nix
+          ./home/desktop.nix
+          ./home/games.nix
         ];
       };
-      nixosConfigurations.martini = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/martini/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.brandon = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
+
+      nixosConfigurations.martini = mkNixos {
+        hostModule = ./hosts/martini;
+        homeModules = [
+          ./home/core.nix
+          ./home/dev.nix
+          ./home/desktop.nix
+          ./home/games.nix
         ];
       };
+
+      nixosConfigurations.media-server = mkNixos {
+        hostModule = ./hosts/media-server;
+        homeModules = [
+          ./home/core.nix
+        ];
+      };
+
+      # work-mac: will use nix-darwin once configured
+      # darwinConfigurations.work-mac = mkDarwin {
+      #   hostModule = ./hosts/work-mac;
+      #   homeModules = [ ./home/core.nix ./home/dev.nix ];
+      # };
     };
 }

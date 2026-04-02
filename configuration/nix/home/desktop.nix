@@ -1,29 +1,26 @@
-{
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
+{ inputs, config, pkgs, ... }:
+
 let
   link = config.lib.file.mkOutOfStoreSymlink;
-  homeDir = config.home.homeDirectory;
-  configDir = "${homeDir}/.config/dotfiles/configuration";
+  configDir = "${config.home.homeDirectory}/.config/dotfiles/configuration";
 in
+
 {
   imports = [
     inputs.noctalia.homeModules.default
-    ./apps.nix
   ];
+
+  programs.noctalia-shell.enable = true;
 
   home.packages = with pkgs; [
+    bluetui
+    brave
     hyprshot
+    pavucontrol
+    slack
+    thunderbird
   ];
 
-  programs.noctalia-shell = {
-    enable = true;
-  };
-
   home.file.".config/hypr".source = link "${configDir}/hypr";
-
   home.file.".config/noctalia".source = link "${configDir}/noctalia";
 }
