@@ -16,6 +16,7 @@
     ../../modules/bluetooth.nix
     ../../modules/base-programs.nix
     ../../modules/kanata.nix
+    ../../modules/media.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -41,6 +42,9 @@
   # TTY keyboard stuff.  Probably not necessary but could be safer.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
+
+  services.upower.enable = true;
+  programs.zoom-us.enable = true;
 
   # Enable fish shell for usage
 
