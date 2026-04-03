@@ -18,3 +18,20 @@ Note that I needed to specify `/usr/bin/curl` for some reason.
 
 # TODO
 Write scripts to do those things called "bootstrap" or something
+
+# Nix Configuration
+
+Nix configuration is a flake that lives in `configuration/nix`.  
+
+To set up on NixOS
+
+``` shell
+sudo nixos-rebuild switch --flake /.configuration/nix#machine-name
+```
+
+To set up on MacOS
+
+``` shell
+# TODO
+```
+
