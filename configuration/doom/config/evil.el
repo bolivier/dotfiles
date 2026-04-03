@@ -64,5 +64,10 @@ smarter version of the regular behavior"
 (use-package! majutsu
   :demand t
   :config
+
+  (map!
+   :map majutsu-log-mode-map
+   :n "G" #'majutsu-git-transient)
+
   (map! :leader
         "g g" #'majutsu))
