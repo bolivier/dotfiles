@@ -15,17 +15,26 @@ in
     emacs-with-vterm
     lazygit
 
+    # Building packages
+    gcc
+
     # Clojure
     babashka
     clojure
     clojure-lsp
     jdk
 
+    # Rust
+    rustup
+
     # Formatting / LSP
     fira-code
     nixd
     nixfmt
     nodePackages.prettier
+
+    # development shells
+    direnv
   ];
 
   home.sessionVariables.EDITOR = "nvim";

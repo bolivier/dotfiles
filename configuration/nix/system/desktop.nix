@@ -33,16 +33,23 @@
       enable = true;
       extraConfig."11-bluetooth-policy" = {
         "monitor.bluez.properties" = {
-          "bluez5.codecs" = [ "aac" "sbc" "sbc_xq" ];
+          "bluez5.codecs" = [
+            "aac"
+            "sbc"
+            "sbc_xq"
+          ];
         };
       };
     };
   };
 
-  # Keyring
   environment.systemPackages = with pkgs; [
+    # Keyring
     libsecret
     seahorse
+
+    # Music
+    spotify
   ];
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
