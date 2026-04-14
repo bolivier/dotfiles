@@ -25,7 +25,8 @@
       "https://github.com/positron-solutions/transient-showcase.git")))
  '(projectile-create-missing-test-files t)
  '(safe-local-variable-values
-   '((column-enforce-column . 80) (cider-clojure-cli-aliases . ":test:dev"))))
+   '((lsp-eslint-working-directories "dashboard" ".") (column-enforce-column . 80)
+     (cider-clojure-cli-aliases . ":test:dev"))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -5,5 +5,8 @@
 /.nrepl-port
 /.clj-kondo/.cache
 /configuration/fish/fish_variables
+
+# Ignore all work files
+*.work.*
 # These are proprietary
 /fonts/*.otf
