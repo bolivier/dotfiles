@@ -11,7 +11,8 @@ function doom-emacs
     disown
 end
 
-zoxide init fish | source
+zoxide init fish --cmd cd | source
+zoxide init fish | source # I still like the zi command
 
 set -gx EDITOR nvim
 
