@@ -63,12 +63,21 @@ smarter version of the regular behavior"
           (apply f args))
          (t (apply f args))))))
 
+  (defun evil-lisp-update-end-cursor-for-eval (f &rest args)
+    (interactive)
+    (message "args: %s" args)
+    (if (and
+         (evil-normal-state-p)
+         (looking-at (rx (or ")" "]" "}"))))
+        (save-excursion
+          (evil-save-state
+            (evil-emacs-state)
+            (forward-char 1)
+            (apply f args)))
+      (apply f args)))
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
-  (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-pprint)
-  (advice-add 'bso/cider-def-var :around #'evil-lisp-update-cursor-for-pprint)
-  (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
-  )
+  (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval))
 
 (use-package! harpoon
   :demand t
@@ -90,8 +99,7 @@ smarter version of the regular behavior"
 
         :localleader
         "e p" #'cider-pprint-eval-last-sexp
-        "e v" #'bso/cider-def-var)
-  )
+        "e v" #'bso/cider-def-var))
 
 (use-package! majutsu
   :demand t

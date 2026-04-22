@@ -25,6 +25,15 @@
       :leader :prefix "o"
       "d" #'switch-to-or-create-postgres-buffer)
 
+
+(defun bso/copy-current-filename ()
+  "Copy the filename for the current buffer"
+  (interactive)
+  (let ((filename buffer-file-name))
+    (with-temp-buffer
+      (insert filename)
+      (kill-ring-save (point-min) (point-max)))))
+
 (defun save-all () (save-some-buffers t))
 (add-hook! focus-out #'save-all)
 (global-subword-mode 1)

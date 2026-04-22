@@ -30,6 +30,10 @@
     (when (and (bound-and-true-p persp-mode)
                (cider-current-repl))
       (persp-add-buffer (cider-current-repl))))
+  (map! :map cider-mode-map
+        :localleader
+        "e v" #'bso/cider-def-var
+        "e p" #'cider-pprint-eval-last-sexp)
 
   (map! :map cider-mode-map
         "C-c l e v" #'bso/cider-def-var
@@ -37,6 +41,7 @@
         "M-e" #'bso/cider-conditional-eval
 
         "M-E" #'cider-eval-buffer
+        
 
         :mode cider-repl-mode
         "<up>"   #'cider-repl-previous-input

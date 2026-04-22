@@ -11,3 +11,4 @@
 (load! "config/apps")
 (load! "config/evil")
 (load! "config/nix")
+(load! "config/winnow")

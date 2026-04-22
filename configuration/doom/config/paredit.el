@@ -5,7 +5,8 @@
   (map!
    :map paredit-mode-map
    "M-<backspace>" 'paredit-backward-kill-word
-   "DEL" 'paredit-backward-delete))
+   "DEL" 'paredit-backward-delete
+   :n "D" #'paredit-kill))
 
 (add-hook! paredit-mode
   (smartparens-strict-mode -1)

@@ -65,7 +65,8 @@ checking the last known position of the point.'"
              (emmet-mode -1))
   (map! :map (typescript-mode typescript-tsx-mode-map
                               js2-mode)
-        "C-c c f" #'bso/toggle-js-async-fn)
+        :leader
+        "c p" #'bso/toggle-js-async-fn)
 
 
   (map! :map general-override-mode-map
@@ -117,3 +118,33 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
   :trigger "__test.js")
 
 (add-hook! markdown-mode 'auto-fill-mode)
+
+(after! lsp-mode
+  (setq lsp-file-watch-threshold 10000
+        ;; Required for `bso/lsp-suggest-ts-project-root' below to fire.
+        ;; Without this, `lsp--calculate-root' skips `lsp--suggest-project-root'
+        ;; and reuses whatever folder is already in `lsp-session-folders',
+        ;; so dashboard/ files get attached to the root server.
+        lsp-auto-guess-root t)
+  (dolist (dir '("[/\\\\]s3rver_dir\\'"
+                 "[/\\\\]\\.next\\'"
+                 "[/\\\\]\\.cache\\'"
+                 "[/\\\\]policies\\'"
+                 "[/\\\\]e2e\\'"
+                 "[/\\\\]infrastructure\\'"))
+    (push dir lsp-file-watch-ignored-directories))
+
+  ;; In monorepos, each sub-package has its own tsconfig.json.
+  ;; Default root detection uses the git root, which means one LSP server
+  ;; with the root tsconfig that only covers server/.  By finding the nearest
+  ;; tsconfig.json we start a separate LSP server per sub-package so
+  ;; auto-imports and resolution work correctly within each.
+  (defadvice! bso/lsp-suggest-ts-project-root (orig-fn)
+    :around #'lsp--suggest-project-root
+    (or (when (derived-mode-p 'typescript-mode 'typescript-tsx-mode
+                              'js-mode 'js2-mode 'rjsx-mode 'web-mode)
+          (when-let ((root (locate-dominating-file
+                            (or (buffer-file-name) default-directory)
+                            "tsconfig.json")))
+            (expand-file-name root)))
+        (funcall orig-fn))))
