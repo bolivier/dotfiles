@@ -41,6 +41,13 @@
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
 
+  services.openvpn.servers = {
+    nordvpn = {
+      config = "config /home/brandon/.config/nordvpn/server.ovpn";
+      autoStart = false; # set to true if you want it on boot
+    };
+  };
+
   # Safety packages (duplicated from home-manager for TTY/rescue access)
   environment.systemPackages = with pkgs; [
     babashka
@@ -53,6 +60,7 @@
     ripgrep
     tree
     wget
+    openvpn
   ];
 
   # Network

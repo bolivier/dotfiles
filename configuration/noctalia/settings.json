@@ -19,7 +19,8 @@
         "overviewLayer": true,
         "pinnedApps": [
             "emacs",
-            "brave-browser"
+            "brave-browser",
+            "steam"
         ],
         "position": "center",
         "screenshotAnnotationTool": "",
@@ -420,7 +421,7 @@
         "airplaneModeEnabled": false,
         "bluetoothAutoConnect": true,
         "bluetoothDetailsViewMode": "grid",
-        "bluetoothHideUnnamedDevices": false,
+        "bluetoothHideUnnamedDevices": true,
         "bluetoothRssiPollIntervalMs": 60000,
         "bluetoothRssiPollingEnabled": false,
         "disableDiscoverability": false,
