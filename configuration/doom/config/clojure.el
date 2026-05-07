@@ -3,8 +3,8 @@
 (add-hook! (clojure-mode cider-repl-mode) #'enable-paredit-mode)
 
 (after! clojure-mode
-  (setq! lsp-clojure-server-command '("clojure-lsp"))
-  (setq! clojure-toplevel-inside-comment-form t)
+  (setopt lsp-clojure-server-command '("clojure-lsp"))
+  (setopt clojure-toplevel-inside-comment-form t)
 
   (map! :map clojure-mode-map
         "C-c C-r s e" #'cljr-expand-let
@@ -142,3 +142,32 @@ Otherwise move forward sentence, like normal"
       (when (looking-at (rx (any "({[")))
         (paredit-forward))
       (apply f args))))
+
+(defun cider-read-and-eval (&optional value)
+  "Read a sexp from the minibuffer and output its result to the echo area.
+If VALUE is non-nil, it is inserted into the minibuffer as initial input.
+
+Altered version to activate original mode so it works in cljs"
+  (interactive)
+  (let* ((form (cider-read-from-minibuffer "Clojure Eval: " value))
+         (override cider-interactive-eval-override)
+         (ns-form (if (cider-ns-form-p form) "" (format "(ns %s)" (cider-current-ns))))
+         (activate-original-mode (cond
+                                  ((eq 'clojure-mode major-mode) #'clojure-mode)
+                                  ((eq 'clojurescript-mode major-mode) #'clojurescript-mode))))
+    (with-current-buffer (get-buffer-create cider-read-eval-buffer)
+      (erase-buffer)
+
+      (funcall activate-original-mode)
+      (unless (string= "" ns-form)
+        (insert ns-form "\n\n"))
+      (insert form)
+      (let ((cider-interactive-eval-override override))
+        (cider-interactive-eval form
+                                nil
+                                nil
+                                (cider--nrepl-pr-request-plist))))))
+(map! :mode cider-mode
+      :localleader
+      "e R" #'cider-read-and-eval
+      )

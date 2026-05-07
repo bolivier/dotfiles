@@ -29,6 +29,7 @@ in
     # Javascript
     typescript-language-server
     nodejs
+    bun
 
     # Rust
     rustup

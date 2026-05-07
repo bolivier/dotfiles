@@ -1,6 +1,10 @@
 local terminal = "ghostty"
 local browser = "brave --ozone-platform=wayland --new-window"
 
+hl.on("hyprland.start", function() 
+  hl.exec_cmd("noctalia-shell")
+end)
+
 hl.monitor({
 	output = "DP-3",
 	mode = "preferred",
@@ -23,7 +27,7 @@ hl.monitor({
 	scale = "auto",
 })
 
-hl.env("GDK_SCALE", "24")
+hl.env("GDK_SCALE", "1")
 hl.env("XCURSOR_SIZE", "20")
 hl.env("HYPRCURSOR_SIZE", "24")
 
@@ -113,10 +117,26 @@ hl.bind(super_shift("h"), hl.dsp.layout('swapcol l'))
 hl.bind(super_shift("l"), hl.dsp.layout('swapcol r'))
 
 
+function notify(data)     
+  local json_string = '{ "title": "hello"}'
+
+  hl.dispatch(
+    hl.dsp.exec_cmd(
+      "noctalia-shell ipc call toast send '{ \"title\": \"hello\"}'"
+    )
+  )
+end
+
+hl.bind(super('n'),
+  function()
+    notify({ title = 'hello' })
+  end)
+
+
 function toggle_fullscreen_ish()
 -- Figure out how to toggle 'fit active' and colsize 0.5 here.
 -- mostly need to know how to procure data about window
-
+  local window = hl.get_active_window();
 end
 
 

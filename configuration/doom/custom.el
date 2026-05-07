@@ -22,7 +22,7 @@
  '(projectile-create-missing-test-files t)
  '(projectile-enable-idle-timer nil)
  '(safe-local-variable-values
-   '((lsp-eslint-working-directories "dashboard" ".") (column-enforce-column . 80)
+   '((projectile-project-type . clojure-cli) (lsp-eslint-working-directories "dashboard" ".") (column-enforce-column . 80)
      (cider-clojure-cli-aliases . ":test:dev"))))
 
 (custom-set-faces
