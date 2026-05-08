@@ -15,6 +15,7 @@
   (setf (alist-get 'zprint apheleia-formatters)
         '("zprint"))
   (setf (alist-get 'clojure-mode apheleia-mode-alist) 'zprint
+        (alist-get 'clojurescript-mode apheleia-mode-alist) 'zprint
         (alist-get 'clojure-ts-mode apheleia-mode-alist) 'zprint)
 
   ;; add testing template -- this might need to be after clj-refactor

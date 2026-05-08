@@ -43,8 +43,29 @@ smarter version of the regular behavior"
           (funcall f args))
       (funcall f args)))
 
+  (defun evil-lisp-update-cursor-for-pprint (f &rest args)
+    (interactive)
+    (save-excursion
+      (evil-save-state
+        (cond
+         ((and
+           (evil-normal-state-p)
+           (looking-at (rx (or ")" "]" "}"))))
+          (evil-emacs-state)
+          (forward-char 1)
+          (apply f args)
+          )
+         ((and
+           (evil-normal-state-p)
+           (looking-at (rx (or "(" "(" "{"))))
+          (evil-emacs-state)
+          (paredit-forward)
+          (apply f args))
+         (t (apply f args))))))
+
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
+  (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-pprint)
   (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   )
 
@@ -60,6 +81,15 @@ smarter version of the regular behavior"
         "3" #'harpoon-go-to-3
         "4" #'harpoon-go-to-4
         "5" #'harpoon-go-to-5))
+
+(after! cider
+  (map! :mode cider-mode
+        :n ">" #'paredit-forward-slurp-sexp
+        :n "<" #'paredit-forward-barf-sexp
+
+        :localleader
+        "e p" #'cider-pprint-eval-last-sexp)
+  )
 
 (use-package! majutsu
   :demand t
