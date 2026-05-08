@@ -23,6 +23,11 @@ in
     clojure
     clojure-lsp
     jdk
+    zprint
+
+    # Javascript
+    typescript-language-server
+    nodejs
 
     # Rust
     rustup
