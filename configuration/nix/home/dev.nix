@@ -24,6 +24,7 @@ in
     clojure-lsp
     jdk
     zprint
+    clj-kondo
 
     # Javascript
     typescript-language-server
@@ -36,7 +37,7 @@ in
     fira-code
     nixd
     nixfmt
-    nodePackages.prettier
+    prettier
 
     # development shells
     direnv

@@ -36,7 +36,16 @@
   boot.loader.timeout = 0;
 
   # Locale
-  time.timeZone = "America/Chicago";
+  #     # NTP time sync — enabled by default on NixOS, but explicit is fine
+  services.timesyncd.enable = true;
+
+  # Auto-update timezone from geolocation
+  services.automatic-timezoned.enable = true;
+
+  # automatic-timezoned needs geoclue; the module pulls it in,
+  # but you may want to ensure the agent is allowed:
+  location.provider = "geoclue2";
+
   i18n.defaultLocale = "en_US.UTF-8";
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";

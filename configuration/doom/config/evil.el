@@ -66,6 +66,7 @@ smarter version of the regular behavior"
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-pprint)
+  (advice-add 'bso/cider-def-var :around #'evil-lisp-update-cursor-for-pprint)
   (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   )
 
@@ -88,7 +89,8 @@ smarter version of the regular behavior"
         :n "<" #'paredit-forward-barf-sexp
 
         :localleader
-        "e p" #'cider-pprint-eval-last-sexp)
+        "e p" #'cider-pprint-eval-last-sexp
+        "e v" #'bso/cider-def-var)
   )
 
 (use-package! majutsu
