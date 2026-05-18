@@ -59,7 +59,7 @@ checking the last known position of the point.'"
                 (just-one-space)))
           (insert "async ")))))
 
-  (add-hook! (typescript-tsx-mode typescript-mode rjsx-mode)
+  (add-hook! (typescript-tsx-mode typescript-mode rjsx-mode js-mode js2-mode)
              'prettier-mode
              'turn-on-smartparens-strict-mode
              (emmet-mode -1))
@@ -94,8 +94,6 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
 (use-package! json-mode
   :init
   (add-hook! json-mode 'prettier-mode))
-
-
 
 (use-package! yaml-pro
   :after yaml-mode
@@ -143,8 +141,8 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
     :around #'lsp--suggest-project-root
     (or (when (derived-mode-p 'typescript-mode 'typescript-tsx-mode
                               'js-mode 'js2-mode 'rjsx-mode 'web-mode)
-          (when-let ((root (locate-dominating-file
-                            (or (buffer-file-name) default-directory)
-                            "tsconfig.json")))
+          (when-let* ((file (or (buffer-file-name) default-directory))
+                      (root (or (locate-dominating-file file "tsconfig.json")
+                                (locate-dominating-file file "jsconfig.json"))))
             (expand-file-name root)))
         (funcall orig-fn))))

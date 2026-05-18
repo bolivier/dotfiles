@@ -116,7 +116,8 @@ smarter version of the regular behavior"
   :config
 
   (map!
-   :map majutsu-log-mode-map)
+   :map majutsu-log-mode-map
+   :n "G" #'majutsu-git-transient)
 
   (map! :leader
         "g g" #'majutsu))
