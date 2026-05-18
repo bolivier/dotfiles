@@ -38,8 +38,8 @@
 
 (use-package org-roam
   :ensure t
-  :custom
-  (org-roam-directory (file-truename "/Users/brandon/work/canopy-connect-notes"))
+  ;; :custom
+  ;; (org-roam-directory (file-truename "/Users/brandon/work/canopy-connect-notes"))
   :config
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)

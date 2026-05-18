@@ -39,6 +39,10 @@ in
     nixfmt
     prettier
 
+    # Lua related stuff
+    # This is motivated by hyprland lua config
+    lua-language-server
+
     # development shells
     direnv
   ];

@@ -1,204 +1,123 @@
--- Hyprland configuration (ported from hyprland.conf)
-
---------------------
---- MONITORS ---
---------------------
-
-monitor("DP-3", "preferred", "auto", 1.2)
-monitor("eDP-1", "preferred", "auto", 1, { mirror = "DP-3" })
-
-xwayland {
-    force_zero_scaling = true
-}
-
--- toolkit-specific scale
-env("GDK_SCALE", "1")
-env("XCURSOR_SIZE", "24")
-
----------------------
---- MY PROGRAMS ---
----------------------
-
 local terminal = "ghostty"
 local browser = "brave --ozone-platform=wayland --new-window"
-local webapp = browser .. " --app"
 
--------------------
---- AUTOSTART ---
--------------------
+hl.monitor({
+	output = "DP-3",
+	mode = "preferred",
+	position = "auto",
+	scale = "1.2",
+})
 
-exec_once("noctalia-shell")
+hl.monitor({
+	output = "",
+	mode = "preferred",
+	position = "auto",
+	scale = "auto",
+})
 
-bind("SUPER", "space", "exec", "noctalia-shell ipc call launcher toggle")
+hl.env("GDK_SCALE", "24")
+hl.env("XCURSOR_SIZE", "20")
+hl.env("HYPRCURSOR_SIZE", "24")
 
--------------------------------
---- ENVIRONMENT VARIABLES ---
--------------------------------
+hl.config({
+    general = {
+      gaps_in = 5,
+      gaps_out = 5,
+      border_size = 2,
+      col = {
+        active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+        inactive_border = "rgba(595959aa)",
+      },
 
-env("XCURSOR_SIZE", "24")
-env("HYPRCURSOR_SIZE", "24")
 
------------------------
---- LOOK AND FEEL ---
------------------------
+      resize_on_border = true,
 
-general {
-    gaps_in = 5
-    gaps_out = 5
+      allow_tearing = false,
+      layout = "scrolling",
+    },
 
-    border_size = 2
+    decoration = {
+      rounding = 10,
+      rounding_power = 2,
 
-    ["col.active_border"] = rgba("33ccffee") .. " " .. rgba("00ff99ee") .. " 45deg"
-    ["col.inactive_border"] = rgba("595959aa")
+      shadow = {
+        enabled = true,
+        range = 4,
+        render_power = 3,
+        color = 0xee1a1a1a,
 
-    resize_on_border = true
+      }
+    },
 
-    allow_tearing = false
+    xwayland = {
+      -- Fixes the Emacs font
+      force_zero_scaling = true,
+    },
 
-    layout = "scrolling"
-}
-
-decoration {
-    rounding = 10
-
-    active_opacity = 1
-    inactive_opacity = 0.98
-
-    blur {
-        enabled = true
-        size = 3
-        passes = 2
-
-        vibrancy = 0.1696
+    misc = {
+      disable_hyprland_logo = true,
+      disable_splash_rendering = true,
     }
-}
+})
 
-animations {
-    enabled = true
-
-    bezier("myBezier", 0.05, 0.9, 0.1, 1.05)
-
-    animation("windows", true, 7, "myBezier")
-    animation("windowsOut", true, 7, "default", "popin 80%")
-    animation("border", true, 10, "default")
-    animation("borderangle", true, 8, "default")
-    animation("fade", true, 7, "default")
-    animation("workspaces", true, 6, "default")
-}
-
-scrolling {}
-
-dwindle {
-    pseudotile = true
-    preserve_split = true
-    bind("SUPER", "h", "movefocus", "l")
-    bind("SUPER", "l", "movefocus", "r")
-    bind("SUPER", "k", "movefocus", "u")
-    bind("SUPER", "j", "movefocus", "d")
-    bind("SUPER_SHIFT", "h", "swapwindow", "l")
-    bind("SUPER_SHIFT", "l", "swapwindow", "r")
-    bind("SUPER_SHIFT", "j", "swapwindow", "d")
-    bind("SUPER_SHIFT", "k", "swapwindow", "u")
-}
-
-master {
-    mfact = 0.65
-    new_status = "master"
-    new_on_top = true
-    bind("SUPER", "j", "layoutmsg", "rollnext")
-    bind("SUPER", "k", "layoutmsg", "rollprev")
-    bind("SUPER_SHIFT", "j", "layoutmsg", "rollnext")
-    bind("SUPER_SHIFT", "k", "layoutmsg", "rollprev")
-}
-
-misc {
-    disable_hyprland_logo = true
-    focus_on_activate = true
-}
-
----------------
---- INPUT ---
----------------
-
-input {
-    kb_layout = "us"
-    kb_variant = ""
-    kb_model = ""
-    kb_options = ""
-    kb_rules = ""
-
-    follow_mouse = 1
-
-    sensitivity = 0
-
-    touchpad {
-        natural_scroll = false
-    }
-}
-
-device {
-    name = "epic-mouse-v1"
-    sensitivity = -0.5
-}
-
-----------------------
---- KEYBINDINGS ---
-----------------------
-
-bind("SUPER", "q", "killactive", "")
-bind("SUPER", "return", "exec", terminal)
-bind("SUPER", "e", "exec", "emacs")
-bind("SUPER", "m", "exec", "spotify")
-bind("SUPER", "V", "togglefloating", "")
-bind("SUPER", "escape", "exec", "hyprlock")
-
--- apps
-bind("SUPER", "b", "exec", terminal .. " -e bluetui")
-bind("SUPER", "s", "exec", "slack")
-bind("SUPER", "w", "exec", browser)
-bind("SUPER", "z", "exec", "zathura")
-bind("SUPER", "y", "exec", webapp .. "=https://youtube.com")
-
-bind("SUPER", "f", "fullscreen", "")
-bind("SUPER SHIFT", "f", "togglefloating", "")
-bind("SUPER", "PRINT", "exec", "hyprshot -m region")
-bind("SUPER", "p", "exec", "hyprshot -m region")
-
--- Switch workspaces with mainMod + [0-9]
-for i = 1, 9 do
-    bind("SUPER", tostring(i), "workspace", tostring(i))
+function super(key) 
+    return "SUPER + " .. key
 end
-bind("SUPER", "0", "workspace", "10")
 
--- Move active window to a workspace with mainMod + SHIFT + [0-9]
-for i = 1, 9 do
-    bind("SUPER SHIFT", tostring(i), "movetoworkspace", tostring(i))
+function super_shift(key) 
+    return "SUPER + SHIFT + " .. key
 end
-bind("SUPER SHIFT", "0", "movetoworkspace", "10")
 
--- Scroll through existing workspaces with mainMod + scroll
-bind("SUPER", "mouse_down", "workspace", "e+1")
-bind("SUPER", "mouse_up", "workspace", "e-1")
+local global_super_bindings = {
+  q = hl.dsp.window.close(),
+  ["return"] = hl.dsp.exec_cmd(terminal),
+  q =  hl.dsp.window.close(),
+  e =  hl.dsp.exec_cmd("emacs"),
+  w =  hl.dsp.exec_cmd(browser),
+  m =  hl.dsp.exec_cmd("spotify"),
+  s =  hl.dsp.exec_cmd("slack"),
+  escape =  hl.dsp.exec_cmd("hyprlock"),
+  print =  hl.dsp.exec_cmd("hyprshot -m region"),
+  space = hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"),
+}
 
--- Move/resize windows with mainMod + LMB/RMB and dragging
-bindm("SUPER", "mouse:272", "movewindow")
-bindm("SUPER", "mouse:273", "resizewindow")
+for k, f in pairs(global_super_bindings) do
+  hl.bind(super(k), f)
+end
 
--- Volume controls
-bindel("", "XF86AudioRaiseVolume", "exec", "pactl set-sink-volume @DEFAULT_SINK@ +5%")
-bindel("", "XF86AudioLowerVolume", "exec", "pactl set-sink-volume @DEFAULT_SINK@ -5%")
-bindl("", "XF86AudioMute", "exec", "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-bindl("", "XF86AudioMicMute", "exec", "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+hl.bind(super_shift("p"), hl.dsp.exec_cmd("hyprshot -m region"))
 
--- Media controls
-bindl("", "XF86AudioPlay", "exec", "playerctl play-pause")
-bindl("", "XF86AudioNext", "exec", "playerctl next")
-bindl("", "XF86AudioPrev", "exec", "playerctl previous")
-bindl("", "XF86AudioStop", "exec", "playerctl stop")
+-- Laptop multimedia keys for volume and LCD brightness
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%"),      { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"),     { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"),   { locked = true, repeating = true })
 
---------------------------------
---- WINDOWS AND WORKSPACES ---
---------------------------------
+-- Requires playerctl
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
--- Window rules can be added here as needed
--- windowrule("float", "^(kitty)$")
+hl.bind(super("h"), hl.dsp.focus({  direction = "left" }))
+hl.bind(super("l"), hl.dsp.focus({  direction = "right" }))
+hl.bind(super_shift("h"), hl.dsp.layout('swapcol l'))
+hl.bind(super_shift("l"), hl.dsp.layout('swapcol r'))
+
+
+function toggle_fullscreen_ish()
+-- Figure out how to toggle 'fit active' and colsize 0.5 here.
+-- mostly need to know how to procure data about window
+
+end
+
+
+hl.bind(super("f"), hl.dsp.layout('fit active'))
+
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+    hl.bind(super(key), hl.dsp.focus({ workspace = i}))
+    hl.bind(super_shift(key), hl.dsp.window.move({ workspace = i }))
+end
+
+
