@@ -9,6 +9,14 @@ hl.monitor({
 })
 
 hl.monitor({
+	output = "eDP-1",
+	mode = "preferred",
+	position = "auto",
+  mirror = "DP-3",
+	scale = "auto",
+})
+
+hl.monitor({
 	output = "",
 	mode = "preferred",
 	position = "auto",
