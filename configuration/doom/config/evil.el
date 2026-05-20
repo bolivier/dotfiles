@@ -33,6 +33,15 @@ smarter version of the regular behavior"
     (evil-insert 1)))
 
 (after! (evil cider)
+
+  (defun evil-emacs-mode-for-eval (f &rest args)
+    (interactive)
+    (evil-save-state
+      (save-excursion
+        (evil-emacs-state)
+        (forward-char 1)
+        (apply f args))))
+  
   (defun evil-lisp-update-cursor-for-eval (f &rest args)
     (interactive)
     (if (and
@@ -76,7 +85,8 @@ smarter version of the regular behavior"
             (apply f args)))
       (apply f args)))
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
-  (advice-add 'cider-pprint-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
+  (advice-add 'cider-pprint-eval-last-sexp :around #'evil-emacs-mode-for-eval)
+  (advice-add 'bso/cider-def-var :around #'evil-lisp-update-cursor-for-pprint)
   (advice-add 'eros-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval))
 
 (use-package! harpoon

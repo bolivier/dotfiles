@@ -26,14 +26,8 @@ With prefix ARG, prompt to edit the full command before running."
     (compile cmd)
     (delete-other-windows (get-buffer-window "*nixos-rebuild*"))))
 
-(use-package! nix-mode
-  :demand t
-  :config
-  (add-to-list 'compilation-finish-functions #'bso/nix-rebuild-finish)
-  )
-
 (after! nix-mode
+  (add-to-list 'compilation-finish-functions #'bso/nix-rebuild-finish)
   (map!
    :map general-override-mode-map
-   :localleader "r" #'bso/nix-rebuild-config)
-  )
+   :localleader "r" #'bso/nix-rebuild-config))

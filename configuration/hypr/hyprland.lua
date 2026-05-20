@@ -1,6 +1,8 @@
 local terminal = "ghostty"
 local browser = "brave --ozone-platform=wayland --new-window"
 
+local json = require('lua/dkjson')
+
 hl.on("hyprland.start", function() 
   hl.exec_cmd("noctalia-shell")
 end)
@@ -69,6 +71,9 @@ hl.config({
     misc = {
       disable_hyprland_logo = true,
       disable_splash_rendering = true,
+    },
+    scrolling = {
+      explicit_column_widths = "0.5 1.0"
     }
 })
 
@@ -117,30 +122,75 @@ hl.bind(super_shift("h"), hl.dsp.layout('swapcol l'))
 hl.bind(super_shift("l"), hl.dsp.layout('swapcol r'))
 
 
-function notify(data)     
-  local json_string = '{ "title": "hello"}'
+function error(data)
+  data['type'] = 'error'
+  notify(data)
+end
+
+function warn(data)
+  data['type'] = 'warning'
+  notify(data)
+end
+
+function notify(data)
+  local json_string = '{'
+
+  if data.title ~= nil then
+    json_string = json_string .. '"title": "' .. data.title .. '"'
+  end
+
+  if data.body ~= nil then
+    json_string = json_string .. ', "body": "' .. data.body .. '"'
+  end
+
+  if data.icon ~= nil then
+    json_string = json_string .. ', "icon": "' .. data.icon .. '"'
+  end
+
+  if data.type ~= nil then
+    json_string = json_string .. ', "type": "' .. data.type .. '"'
+  end
+
+  if data.duration ~= nil then
+    json_string = json_string .. ', "duration": "' .. data.duration .. '"'
+  end
+  json_string = json_string .. '}'
 
   hl.dispatch(
     hl.dsp.exec_cmd(
-      "noctalia-shell ipc call toast send '{ \"title\": \"hello\"}'"
+      "noctalia-shell ipc call toast send '" .. json_string ..  "'"
     )
   )
 end
 
-hl.bind(super('n'),
-  function()
-    notify({ title = 'hello' })
-  end)
-
+-- hl.bind(super('n'),
+--   function()
+--     notify({
+--       title = 'hello from the fn',
+--       type = 'warning',
+--       body = json.encode({title= 'foo', body = 'bar'})
+--     })
+--   end)
 
 function toggle_fullscreen_ish()
 -- Figure out how to toggle 'fit active' and colsize 0.5 here.
 -- mostly need to know how to procure data about window
+-- I think I can do it with colresize +conf? Do those cycle?
   local window = hl.get_active_window();
+  notify({
+      title = 'is active ? ' .. tostring(window.size),
+      -- body = json.encode(window, { indent = true })
+  })
 end
 
+hl.bind(super('n'),
+  function()
+    toggle_fullscreen_ish()
+  end)
 
-hl.bind(super("f"), hl.dsp.layout('fit active'))
+
+hl.bind(super("f"), hl.dsp.layout('colresize 1'))
+hl.bind(super_shift("f"),hl.dsp.layout('colresize 0.5'))
 
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0

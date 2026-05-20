@@ -25,6 +25,7 @@ in
     jdk
     zprint
     clj-kondo
+    leiningen
 
     # Javascript
     typescript-language-server
@@ -42,6 +43,9 @@ in
 
     # Lua related stuff
     # This is motivated by hyprland lua config
+    lua
+    luaformatter
+    luarocks-nix
     lua-language-server
 
     # development shells
@@ -67,6 +71,7 @@ in
 
   programs.jujutsu.enable = true;
   programs.jujutsu.settings.user = user-settings;
+  programs.jujutsu.settings.ui.conflict-marker-style = "snapshot";
   programs.jujutsu.settings.aliases = {
     tug = [
       "bookmark"
