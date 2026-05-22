@@ -19,7 +19,7 @@ hl.monitor({
 	mode = "preferred",
 	position = "auto",
   mirror = "DP-3",
-	scale = "auto",
+	scale = "1",
 })
 
 hl.monitor({
