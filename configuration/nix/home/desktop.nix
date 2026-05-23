@@ -1,4 +1,9 @@
-{ inputs, config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   link = config.lib.file.mkOutOfStoreSymlink;
@@ -19,6 +24,7 @@ in
     pavucontrol
     slack
     thunderbird
+    hyprlock
   ];
 
   home.file.".config/hypr".source = link "${configDir}/hypr";
