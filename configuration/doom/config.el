@@ -13,3 +13,4 @@
 (load! "config/nix")
 (load! "config/lua")
 (load! "config/winnow")
+;; (load! "config/qml")

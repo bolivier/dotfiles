@@ -67,6 +67,9 @@ hl.config({
       -- Fixes the Emacs font
       force_zero_scaling = true,
     },
+    input = {
+      -- follow_mouse = 0,
+    },
 
     misc = {
       disable_hyprland_logo = true,
@@ -101,6 +104,8 @@ local global_super_bindings = {
 for k, f in pairs(global_super_bindings) do
   hl.bind(super(k), f)
 end
+
+hl.bind(super("space"), hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"))
 
 hl.bind(super_shift("p"), hl.dsp.exec_cmd("hyprshot -m region"))
 

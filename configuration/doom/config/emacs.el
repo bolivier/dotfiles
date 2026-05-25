@@ -18,6 +18,8 @@
       "C-x ="   #'balance-windows
       "M-%"     #'query-replace-regexp
       "M-["     #'pop-global-mark
+      "C-M-="   #'doom/increase-font-size
+      "C-M--"   #'doom/decrease-font-size
       "M-j"     #'bso/join-line
       "M-z"     #'zap-up-to-char
       "M-Z"     #'zap-to-char

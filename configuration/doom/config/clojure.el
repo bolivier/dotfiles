@@ -15,6 +15,7 @@
   (setf (alist-get 'zprint apheleia-formatters)
         '("zprint"))
   (setf (alist-get 'clojure-mode apheleia-mode-alist) 'zprint
+        (alist-get 'clojurec-mode apheleia-mode-alist) 'zprint
         (alist-get 'clojurescript-mode apheleia-mode-alist) 'zprint
         (alist-get 'clojure-ts-mode apheleia-mode-alist) 'zprint)
 
@@ -155,6 +156,7 @@ Altered version to activate original mode so it works in cljs"
            (ns-form (if (cider-ns-form-p form) "" (format "(ns %s)" (cider-current-ns))))
            (activate-original-mode (cond
                                     ((eq 'clojure-mode major-mode) #'clojure-mode)
+                                    ((eq 'clojurec-mode major-mode) #'clojurec-mode)
                                     ((eq 'clojurescript-mode major-mode) #'clojurescript-mode))))
       (with-current-buffer (get-buffer-create cider-read-eval-buffer)
         (erase-buffer)
