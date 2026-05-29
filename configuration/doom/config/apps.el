@@ -7,10 +7,21 @@
         "C-c g p" #'+vc-gutter/previous-hunk
         "C-c g r" #'+vc-gutter/revert-hunk))
 
-(use-package! jj-mode
-  :init
+(use-package! majutsu
+  :demand t
+  :config
+
   (map!
-   "C-c g g" #'jj-log))
+   :map majutsu-log-mode-map)
+
+  (map! :leader
+        "g g" #'majutsu))
+
+(comment
+ (use-package! jj-mode
+   :init
+   (map!
+    "C-c g g" #'jj-log)))
 
 (use-package! prodigy
   :defer nil

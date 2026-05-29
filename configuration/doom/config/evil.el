@@ -37,10 +37,10 @@ smarter version of the regular behavior"
   (defun evil-emacs-mode-for-eval (f &rest args)
     (interactive)
     (evil-save-state
-      (save-excursion
-        (evil-emacs-state)
-        (forward-char 1)
-        (apply f args))))
+     (save-excursion
+       (evil-emacs-state)
+       (forward-char 1)
+       (apply f args))))
   
   (defun evil-lisp-update-cursor-for-eval (f &rest args)
     (interactive)
@@ -56,21 +56,21 @@ smarter version of the regular behavior"
     (interactive)
     (save-excursion
       (evil-save-state
-        (cond
-         ((and
-           (evil-normal-state-p)
-           (looking-at (rx (or ")" "]" "}"))))
-          (evil-emacs-state)
-          (forward-char 1)
-          (apply f args)
-          )
-         ((and
-           (evil-normal-state-p)
-           (looking-at (rx (or "(" "(" "{"))))
-          (evil-emacs-state)
-          (paredit-forward)
-          (apply f args))
-         (t (apply f args))))))
+       (cond
+        ((and
+          (evil-normal-state-p)
+          (looking-at (rx (or ")" "]" "}"))))
+         (evil-emacs-state)
+         (forward-char 1)
+         (apply f args)
+         )
+        ((and
+          (evil-normal-state-p)
+          (looking-at (rx (or "(" "(" "{"))))
+         (evil-emacs-state)
+         (paredit-forward)
+         (apply f args))
+        (t (apply f args))))))
 
   (defun evil-lisp-update-end-cursor-for-eval (f &rest args)
     (interactive)
@@ -80,9 +80,9 @@ smarter version of the regular behavior"
          (looking-at (rx (or ")" "]" "}"))))
         (save-excursion
           (evil-save-state
-            (evil-emacs-state)
-            (forward-char 1)
-            (apply f args)))
+           (evil-emacs-state)
+           (forward-char 1)
+           (apply f args)))
       (apply f args)))
   (advice-add 'cider-eval-last-sexp :around #'evil-lisp-update-cursor-for-eval)
   (advice-add 'cider-pprint-eval-last-sexp :around #'evil-emacs-mode-for-eval)
@@ -116,8 +116,7 @@ smarter version of the regular behavior"
   :config
 
   (map!
-   :map majutsu-log-mode-map
-   :n "G" #'majutsu-git-transient)
+   :map majutsu-log-mode-map)
 
   (map! :leader
         "g g" #'majutsu))
