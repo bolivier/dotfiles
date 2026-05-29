@@ -91,8 +91,8 @@ local global_super_bindings = {
   q =  hl.dsp.window.close(),
   e =  hl.dsp.exec_cmd("emacs"),
   w =  hl.dsp.exec_cmd(browser),
-  m =  hl.dsp.exec_cmd("spotify"),
-  s =  hl.dsp.exec_cmd("slack"),
+  -- m =  hl.dsp.exec_cmd("spotify"),
+  -- s =  hl.dsp.exec_cmd("slack"),
   escape =  hl.dsp.exec_cmd("hyprlock"),
   print =  hl.dsp.exec_cmd("hyprshot -m region"),
   space = hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"),
@@ -103,6 +103,9 @@ for k, f in pairs(global_super_bindings) do
 end
 
 hl.bind(super_shift("p"), hl.dsp.exec_cmd("hyprshot -m region"))
+
+hl.bind(super("s"), hl.dsp.layout("consume"));
+hl.bind(super_shift("s"), hl.dsp.layout("promote"));
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%"), { locked = true, repeating = true })
@@ -191,6 +194,10 @@ hl.bind(super('n'),
 
 hl.bind(super("f"), hl.dsp.layout('colresize 1'))
 hl.bind(super_shift("f"),hl.dsp.layout('colresize 0.5'))
+hl.bind(super("j"), hl.dsp.focus({ direction = 'down' }))
+hl.bind(super("k"), hl.dsp.focus({ direction = 'up' }))
+hl.bind(super_shift("j"), hl.dsp.window.move({ direction = 'down' }))
+hl.bind(super_shift("k"), hl.dsp.window.move({ direction = 'up' }))
 
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
