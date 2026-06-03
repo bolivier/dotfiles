@@ -60,6 +60,7 @@
   # Safety packages (duplicated from home-manager for TTY/rescue access)
   environment.systemPackages = with pkgs; [
     babashka
+
     bluetui
     curl
     fd

@@ -1,0 +1,213 @@
+{
+  "id": "bru",
+  "name": "Bru",
+  "version": "1.1.0",
+  "author": "kmf",
+  "description": "A lekker colorscheme — warm coffee-toned backgrounds with Selenized-bright accents",
+  "dark": {
+    "surfaceText": "#f5e8c7",
+    "surfaceVariantText": "#fbf3db",
+    "backgroundText": "#f5e8c7",
+    "outline": "#8a7f6f",
+    "error": "#fa5750",
+    "warning": "#ed8649",
+    "info": "#4695f7"
+  },
+  "light": {
+    "surfaceText": "#3a2f22",
+    "surfaceVariantText": "#2d241a",
+    "backgroundText": "#3a2f22",
+    "outline": "#8a7f6f",
+    "error": "#d2212d",
+    "warning": "#c25d1e",
+    "info": "#0072d4"
+  },
+  "variants": {
+    "type": "multi",
+    "defaults": {
+      "dark": {
+        "accent": "yellow",
+        "flavor": "espresso"
+      },
+      "light": {
+        "accent": "yellow",
+        "flavor": "latte"
+      }
+    },
+    "flavors": [
+      {
+        "id": "espresso",
+        "name": "Espresso",
+        "dark": {
+          "surface": "#26211c",
+          "surfaceVariant": "#322b23",
+          "background": "#1c1814",
+          "surfaceContainer": "#26211c",
+          "surfaceContainerHigh": "#322b23",
+          "surfaceContainerHighest": "#3a332b"
+        },
+        "light": {}
+      },
+      {
+        "id": "latte",
+        "name": "Latte",
+        "dark": {},
+        "light": {
+          "surface": "#f3ead0",
+          "surfaceVariant": "#ece3cc",
+          "background": "#faf3e0",
+          "surfaceContainer": "#f3ead0",
+          "surfaceContainerHigh": "#ece3cc",
+          "surfaceContainerHighest": "#e0d4b0"
+        }
+      }
+    ],
+    "accents": [
+      {
+        "espresso": {
+          "primary": "#dbb32d",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#55461b",
+          "secondary": "#41c7b9",
+          "surfaceTint": "#2f2716"
+        },
+        "id": "yellow",
+        "latte": {
+          "primary": "#ad8900",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#eee3be",
+          "secondary": "#009c8f",
+          "surfaceTint": "#eee3be"
+        },
+        "name": "Yellow"
+      },
+      {
+        "espresso": {
+          "primary": "#ed8649",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#5a3923",
+          "secondary": "#4695f7",
+          "surfaceTint": "#302319"
+        },
+        "id": "orange",
+        "latte": {
+          "primary": "#c25d1e",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#f1dcc2",
+          "secondary": "#0072d4",
+          "surfaceTint": "#f1dcc2"
+        },
+        "name": "Orange"
+      },
+      {
+        "espresso": {
+          "primary": "#fa5750",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#5e2a26",
+          "secondary": "#75b938",
+          "surfaceTint": "#321e1a"
+        },
+        "id": "red",
+        "latte": {
+          "primary": "#d2212d",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#f4d3c5",
+          "secondary": "#489100",
+          "surfaceTint": "#f4d3c5"
+        },
+        "name": "Red"
+      },
+      {
+        "espresso": {
+          "primary": "#f275be",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#5c3347",
+          "secondary": "#41c7b9",
+          "surfaceTint": "#312125"
+        },
+        "id": "magenta",
+        "latte": {
+          "primary": "#ca4898",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#f2d9d5",
+          "secondary": "#009c8f",
+          "surfaceTint": "#f2d9d5"
+        },
+        "name": "Magenta"
+      },
+      {
+        "espresso": {
+          "primary": "#af88eb",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#483954",
+          "secondary": "#dbb32d",
+          "surfaceTint": "#2a2329"
+        },
+        "id": "violet",
+        "latte": {
+          "primary": "#8762c6",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#e8dddc",
+          "secondary": "#ad8900",
+          "surfaceTint": "#e8dddc"
+        },
+        "name": "Violet"
+      },
+      {
+        "espresso": {
+          "primary": "#4695f7",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#283d58",
+          "secondary": "#ed8649",
+          "surfaceTint": "#20242a"
+        },
+        "id": "blue",
+        "latte": {
+          "primary": "#0072d4",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#d4dfde",
+          "secondary": "#c25d1e",
+          "surfaceTint": "#d4dfde"
+        },
+        "name": "Blue"
+      },
+      {
+        "espresso": {
+          "primary": "#41c7b9",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#274c45",
+          "secondary": "#ed8649",
+          "surfaceTint": "#1f2924"
+        },
+        "id": "teal",
+        "latte": {
+          "primary": "#009c8f",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#d4e5d3",
+          "secondary": "#c25d1e",
+          "surfaceTint": "#d4e5d3"
+        },
+        "name": "Teal"
+      },
+      {
+        "espresso": {
+          "primary": "#75b938",
+          "primaryText": "#1c1814",
+          "primaryContainer": "#36481e",
+          "secondary": "#af88eb",
+          "surfaceTint": "#242817"
+        },
+        "id": "green",
+        "latte": {
+          "primary": "#489100",
+          "primaryText": "#faf3e0",
+          "primaryContainer": "#dfe4be",
+          "secondary": "#8762c6",
+          "surfaceTint": "#dfe4be"
+        },
+        "name": "Green"
+      }
+    ]
+  },
+  "sourceDir": "bru"
+}

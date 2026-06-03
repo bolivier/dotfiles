@@ -47,6 +47,7 @@
     # Keyring
     libsecret
     seahorse
+    _0xproto
 
     # Music
     spotify
@@ -71,5 +72,23 @@
     # Certain features, including CLI integration and system authentication support,
     # require enabling PolKit integration on some desktop environments (e.g. Plasma).
     polkitPolicyOwners = [ "brandon" ];
+  };
+
+  # DMS is an alternative shell to noctalia
+  programs.dms-shell = {
+    enable = true;
+
+    systemd = {
+      enable = true; # Systemd service for auto-start
+      restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
+    };
+
+    # Core features
+    enableSystemMonitoring = true; # System monitoring widgets (dgop)
+    enableVPN = true; # VPN management widget
+    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+    enableAudioWavelength = true; # Audio visualizer (cava)
+    enableCalendarEvents = true; # Calendar integration (khal)
+    enableClipboardPaste = true; # Pasting from the clipboard history (wtype)
   };
 }

@@ -3,8 +3,9 @@ local browser = "brave --ozone-platform=wayland --new-window"
 
 local json = require('lua/dkjson')
 
-hl.on("hyprland.start", function() 
-  hl.exec_cmd("noctalia-shell")
+hl.on("hyprland.start", function()
+  hl.exec_cmd('dms run')
+  -- hl.exec_cmd("noctalia-shell")
 end)
 
 hl.monitor({
@@ -76,7 +77,9 @@ hl.config({
       disable_splash_rendering = true,
     },
     scrolling = {
-      explicit_column_widths = "0.5 1.0"
+      explicit_column_widths = "0.5 1.0",
+      wrap_focus = false,
+      wrap_swapcol = false,
     }
 })
 
@@ -94,18 +97,18 @@ local global_super_bindings = {
   q =  hl.dsp.window.close(),
   e =  hl.dsp.exec_cmd("emacs"),
   w =  hl.dsp.exec_cmd(browser),
-  -- m =  hl.dsp.exec_cmd("spotify"),
-  -- s =  hl.dsp.exec_cmd("slack"),
+  m =  hl.dsp.exec_cmd("spotify"),
+  s =  hl.dsp.exec_cmd("slack"),
   escape =  hl.dsp.exec_cmd("hyprlock"),
-  print =  hl.dsp.exec_cmd("hyprshot -m region"),
-  space = hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"),
+  print =  hl.dsp.exec_cmd("hyprshot -m region"),   
 }
 
 for k, f in pairs(global_super_bindings) do
   hl.bind(super(k), f)
 end
 
-hl.bind(super("space"), hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"))
+-- hl.bind(super("space"), hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"))
+hl.bind(super("space"), hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
 
 hl.bind(super_shift("p"), hl.dsp.exec_cmd("hyprshot -m region"))
 

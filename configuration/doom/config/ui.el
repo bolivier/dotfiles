@@ -24,7 +24,8 @@
 
 (setq coding-font (cl-find-if (lambda (f)
 				(find-font (font-spec :name f)))
-			      '("Comic Code"
+			      '("_0xproto"
+                                "Comic Code"
 				"Fira Code")))
 
 (setq doom-font                (font-spec :family coding-font :size 16)
