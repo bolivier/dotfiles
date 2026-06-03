@@ -27,18 +27,9 @@
       :leader :prefix "o"
       "d" #'switch-to-or-create-postgres-buffer)
 
-
-(defun bso/copy-current-filename ()
-  "Copy the filename for the current buffer"
-  (interactive)
-  (let ((filename buffer-file-name))
-    (with-temp-buffer
-      (insert filename)
-      (kill-ring-save (point-min) (point-max)))))
-
+(global-subword-mode 1)
 (defun save-all () (save-some-buffers t))
 (add-hook! focus-out #'save-all)
-(global-subword-mode 1)
 
 (defun bso/open-line-indent ()
   "Opening a newline and moving text before indentation sucks ass.
@@ -59,21 +50,9 @@ This fixes that with better behavior."
     (end-of-line)
     (delete-horizontal-space)))
 
-(remove-hook! 'prog-mode-hook 'highlight-indent-guides-mode)
-
-(defun inc (n)
-  "Increment"
-  (interactive)
-  (+ n 1))
-
-(defun dec (n)
-  "Decrement"
-  (interactive)
-  (- n 1))
-
 (defun bso/yank-buffer-file-name ()
-  (interactive)
   "Yank the buffer file name into the clipboard"
+  (interactive)
   (kill-new (buffer-file-name)))
 
 (defun window-split-toggle ()

@@ -24,20 +24,19 @@
 
 (setq coding-font (cl-find-if (lambda (f)
 				(find-font (font-spec :name f)))
-			      '("_0xproto"
+			      '("0xProto"
                                 "Comic Code"
 				"Fira Code")))
 
-(setq doom-font                (font-spec :family coding-font :size 16)
+(setq doom-font                (font-spec :family coding-font :size 13)
       doom-variable-pitch-font (font-spec :family coding-font ) ; inherits `doom-font''s :size
-      doom-symbol-font         (font-spec :family "Noto Color Emoji" :size 16)
+      doom-symbol-font         (font-spec :family "Noto Color Emoji" :size 13)
       doom-big-font            (font-spec :family coding-font :size 18)
       doom-font-increment      1)
 
 ;; Emoji fix
 (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
 (set-fontset-font t 'unicode (font-spec :family "Symbols Nerd Font Mono") nil 'append)
-
 
 (setq doom-theme 'doom-monokai-pro)
 

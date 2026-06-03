@@ -16,12 +16,7 @@ checking the last known position of the point.'"
     (interactive)
     (cl-flet* ((looking-at-js-function? (lambda ()
                                           (or
-                                           (looking-back "=> ")
-
-                                           (save-excursion
-                                             (backward-word 3)
-                                             (looking-at "function"))
-
+                                           (looking-back "=> " 3)
                                            (save-excursion
                                              (backward-word 3)
                                              (looking-at "function")))))
@@ -59,19 +54,12 @@ checking the last known position of the point.'"
                 (just-one-space)))
           (insert "async ")))))
 
-  (add-hook! (typescript-tsx-mode typescript-mode rjsx-mode js-mode js2-mode)
-             'prettier-mode
+  (add-hook! (typescript-tsx-mode typescript-mode rjsx-mode js-mode js2-mode)             
              'turn-on-smartparens-strict-mode
              (emmet-mode -1))
-  (map! :map (typescript-mode typescript-tsx-mode-map
-                              js2-mode)
-        :leader
-        "c p" #'bso/toggle-js-async-fn)
-
-
-  (map! :map general-override-mode-map
-        "C-c c f" nil)
-  )
+  (map! :map (typescript-mode-map typescript-tsx-mode-map js2-mode-map)
+        :leader        
+        "c p" #'bso/toggle-js-async-fn))
 
 (defun +web/indent-or-yas-or-emmet-expand ()
   "Do-what-I-mean on TAB.
@@ -91,10 +79,6 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
 
          #'emmet-expand-yas)))
 
-(use-package! json-mode
-  :init
-  (add-hook! json-mode 'prettier-mode))
-
 (use-package! yaml-pro
   :after yaml-mode
   :hook (yaml-mode . yaml-pro-mode)
@@ -110,8 +94,6 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
         :n "M-k" #'yaml-pro-move-subtree-up
         :n "M-j" #'yaml-pro-move-subtree-down))
 
-
-
 (set-file-template! "\\.test\\.tsx?"   :mode 'typescript-tsx-mode
   :trigger "__test.js")
 
@@ -124,6 +106,11 @@ snippet, or `emmet-expand-yas'/`emmet-expand-line', depending on whether
         ;; and reuses whatever folder is already in `lsp-session-folders',
         ;; so dashboard/ files get attached to the root server.
         lsp-auto-guess-root t)
+
+  (map! :mode (typescript-tsx-mode typescript-mode js2-mode web-mode)
+        :leader
+        "c o" #'lsp-javascript-remove-unused-imports)
+
   (dolist (dir '("[/\\\\]s3rver_dir\\'"
                  "[/\\\\]\\.next\\'"
                  "[/\\\\]\\.cache\\'"

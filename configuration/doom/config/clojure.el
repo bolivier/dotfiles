@@ -49,8 +49,7 @@
         "<down>" #'cider-repl-next-input
         "C-c o"  #'cider-repl-clear-buffer)
 
-  ;; (advice-remove 'cider-eval-buffer #'save-buffer)
-  (advice-add 'cider-pprint-eval-last-sexp :around #'skip-to-closing-if-at-opening)
+  (setq cider-save-file-on-load t)
 
   (defun clojure-project-root-path (&optional dir-name)
     "Overridden by me in the config.

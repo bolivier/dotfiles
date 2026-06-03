@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: lexical-binding-dec
+# uuid: 
+# key: lex
+# condition: t
+# --
+;;; -*- lexical-binding: t; -*-
+$0

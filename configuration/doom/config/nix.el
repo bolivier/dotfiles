@@ -1,3 +1,9 @@
+;;; -*- lexical-binding: t; -*-
+
+(defvar bso/nix-rebuild--window-config nil
+  "Window configuration saved before a NixOS rebuild, restored on success.")
+
+
 (defun bso/nix-rebuild-finish (buffer status)
   "Close the nixos-rebuild buffer and restore windows if successful."
   (when (equal (buffer-name buffer) "*nixos-rebuild*")
