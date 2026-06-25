@@ -2,6 +2,7 @@
 
 (load! "config/ui")
 (load! "config/emacs")
+(load! "site-lisp/comint-compose")
 (load! "config/postgres")
 (load! "config/org")
 (load! "config/editing")
@@ -14,4 +15,7 @@
 (load! "config/lua")
 (load! "config/winnow")
 (load! "site-lisp/vterm-editor")
+
+(map! :map comint-mode-map
+      "C-c C-e" #'comint-compose-open)
 

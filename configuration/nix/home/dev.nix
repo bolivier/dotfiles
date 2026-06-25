@@ -35,6 +35,9 @@ in
     # Rust
     rustup
 
+    # SQL
+    sqls
+
     # Formatting / LSP
     fira-code
     nixd
