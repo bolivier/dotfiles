@@ -9,10 +9,11 @@
 
 ;;; Commentary:
 
-;; `comint-compose' gives any comint-derived REPL (a `sql-interactive-mode'
-;; Postgres prompt, an inferior shell, a Python REPL, ...) a small,
-;; persistent composer buffer that lives in a window pinned to the bottom of
-;; the frame, beneath the REPL itself -- think of CIDER's REPL buffer.
+;; `comint-compose' gives a REPL -- any comint-derived one (a
+;; `sql-interactive-mode' Postgres prompt, an inferior shell, a Python REPL,
+;; ...) or a `vterm' terminal -- a small, persistent composer buffer that
+;; lives in a window pinned to the bottom of the frame, beneath the REPL
+;; itself -- think of CIDER's REPL buffer.
 ;;
 ;; You write your command in the composer with all your usual Emacs bindings,
 ;; then press C-c C-c.  The text is sent to the REPL, entered and evaluated
@@ -25,13 +26,18 @@
 ;; forward again.
 ;;
 ;; Usage:
-;;   With point in a comint REPL buffer, call `comint-compose-open'.
+;;   With point in a comint REPL or vterm buffer, call `comint-compose-open'.
 
 ;;; Code:
 
 (require 'comint)
 (require 'subr-x)
 (require 'ring)
+
+;; vterm is optional and only loaded on demand; declare its functions so the
+;; byte-compiler stays quiet when it is not present.
+(declare-function vterm-send-string "ext:vterm" (string &optional paste-p))
+(declare-function vterm-send-return "ext:vterm" ())
 
 ;;;; Options
 
@@ -59,8 +65,17 @@ Consulted only when the source REPL's major mode has no entry in
   :type 'function
   :group 'comint-compose)
 
+(defcustom comint-compose-input-ring-size 64
+  "How many sent inputs to remember for sources without their own history.
+Used as the size of the composer-local history ring for non-comint
+backends such as vterm, whose history lives in the inferior shell and is
+not visible to Emacs."
+  :type 'integer
+  :group 'comint-compose)
+
 (defcustom comint-compose-major-mode-alist
-  '((sql-interactive-mode . sql-mode))
+  '((sql-interactive-mode . sql-mode)
+    (vterm-mode . sh-mode))
   "Alist mapping a source REPL major mode to the composer's major mode.
 This lets the composer reuse the editing affordances (font-lock,
 indentation, ...) of the language being typed.  Source modes not listed
@@ -85,6 +100,9 @@ wiring in `postgres.el')."
 (defvar-local comint-compose--history-index -1
   "Position in the source REPL's input ring while browsing history.
 -1 means \"not currently browsing\".")
+
+(defvar-local comint-compose--input-ring nil
+  "Composer-local history ring for sources without their own (e.g. vterm).")
 
 (defvar comint-compose-mode-map
   (let ((map (make-sparse-keymap)))
@@ -120,17 +138,50 @@ wiring in `postgres.el')."
       (user-error "The REPL this composer was attached to is gone"))
     source))
 
+(defun comint-compose--repl-buffer-p (&optional buffer)
+  "Return non-nil if BUFFER (default current) is a supported REPL backend."
+  (with-current-buffer (or buffer (current-buffer))
+    (or (derived-mode-p 'comint-mode)
+        (derived-mode-p 'vterm-mode))))
+
+(defun comint-compose--send-to-source (source command)
+  "Send COMMAND to the REPL in SOURCE and have it evaluated.
+Dispatches on the REPL backend: comint buffers go through
+`comint-send-input' (so the input joins their own history); vterm
+buffers are driven with `vterm-send-string'/`vterm-send-return'."
+  (with-current-buffer source
+    (cond
+     ((derived-mode-p 'vterm-mode)
+      (vterm-send-string command t)
+      (vterm-send-return))
+     ((derived-mode-p 'comint-mode)
+      (goto-char (point-max))
+      (insert command)
+      (comint-send-input))
+     (t
+      (user-error "Don't know how to send to a %s buffer" major-mode)))))
+
+(defun comint-compose--history-ring ()
+  "Return the history ring to browse, or nil if there is none yet.
+Prefers the source's own `comint-input-ring'; for backends that don't
+keep one (vterm), falls back to the composer-local ring of sent inputs."
+  (let* ((source (comint-compose--source-or-error))
+         (ring (buffer-local-value 'comint-input-ring source)))
+    (if (and (ring-p ring) (not (ring-empty-p ring)))
+        ring
+      comint-compose--input-ring)))
+
 ;;;; Commands
 
 ;;;###autoload
 (defun comint-compose-open ()
-  "Open a composer buffer for the comint REPL in the current buffer.
+  "Open a composer buffer for the comint REPL or vterm in the current buffer.
 The composer appears in a window pinned to the bottom of the frame and
 stays attached to this REPL.  If it already exists it is simply
 reselected."
   (interactive)
-  (unless (derived-mode-p 'comint-mode)
-    (user-error "Not in a comint REPL buffer"))
+  (unless (comint-compose--repl-buffer-p)
+    (user-error "Not in a comint or vterm REPL buffer"))
   (let* ((source (current-buffer))
          (mode (comint-compose--major-mode-for source))
          (buf (get-buffer-create (comint-compose--buffer-name source)))
@@ -141,6 +192,9 @@ reselected."
       (comint-compose-mode 1)
       (setq comint-compose--source-buffer source)
       (setq comint-compose--history-index -1)
+      (unless (ring-p comint-compose--input-ring)
+        (setq comint-compose--input-ring
+              (make-ring comint-compose-input-ring-size)))
       (setq header-line-format
             (substitute-command-keys
              "\\[comint-compose-send] send  \\[comint-compose-previous] prev  \
@@ -156,9 +210,11 @@ reselected."
 
 (defun comint-compose-send ()
   "Send the composer's contents to the source REPL and evaluate them.
-The text is entered through `comint-send-input', so it is echoed in the
-REPL and added to its input history.  Clears the composer afterwards
-unless `comint-compose-clear-buffer-after-submit' is nil."
+For comint REPLs the text is entered through `comint-send-input', so it
+is echoed and joins the REPL's own input history; for vterm it is pasted
+and submitted, and remembered in the composer-local history ring.  Clears
+the composer afterwards unless `comint-compose-clear-buffer-after-submit'
+is nil."
   (interactive)
   (let ((source (comint-compose--source-or-error))
         (command (string-trim-right (buffer-string))))
@@ -166,10 +222,11 @@ unless `comint-compose-clear-buffer-after-submit' is nil."
       (user-error "Nothing to send"))
     (unless (get-buffer-process source)
       (user-error "The REPL has no running process"))
-    (with-current-buffer source
-      (goto-char (point-max))
-      (insert command)
-      (comint-send-input))
+    (comint-compose--send-to-source source command)
+    ;; comint keeps its own input ring; for other backends (vterm) record
+    ;; the command ourselves so C-c C-p can pull it back.
+    (unless (buffer-local-value 'comint-input-ring source)
+      (ring-insert comint-compose--input-ring command))
     (setq comint-compose--history-index -1)
     (when comint-compose-clear-buffer-after-submit
       (erase-buffer))))
@@ -177,10 +234,9 @@ unless `comint-compose-clear-buffer-after-submit' is nil."
 (defun comint-compose--history-move (delta)
   "Replace the composer contents with an input DELTA steps away in history.
 Positive DELTA moves toward older input."
-  (let* ((source (comint-compose--source-or-error))
-         (ring (buffer-local-value 'comint-input-ring source)))
+  (let ((ring (comint-compose--history-ring)))
     (unless (and (ring-p ring) (not (ring-empty-p ring)))
-      (user-error "The REPL has no input history yet"))
+      (user-error "No input history yet"))
     (let* ((len (ring-length ring))
            (index (max 0 (min (+ comint-compose--history-index delta) (1- len)))))
       (setq comint-compose--history-index index)

@@ -19,3 +19,8 @@
 (map! :map comint-mode-map
       "C-c C-e" #'comint-compose-open)
 
+(after! vterm
+  ;; vterm sends almost everything straight to the terminal, so bind the
+  ;; opener on vterm's own map (and keep it out of copy mode confusion).
+  (map! :map vterm-mode-map
+        "C-c C-e" #'comint-compose-open))
