@@ -47,11 +47,16 @@
     # Keyring
     libsecret
     seahorse
-    _0xproto
 
     # Music
     spotify
   ];
+
+  fonts.packages = with pkgs; [
+    _0xproto # Standard 0xProto Font
+    nerd-fonts._0xproto # 0xProto Nerd Font (with icons)
+  ];
+
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
 

@@ -44,6 +44,8 @@ hl.config({
         inactive_border = "rgba(595959aa)",
       },
 
+      
+
 
       resize_on_border = true,
 
@@ -75,7 +77,10 @@ hl.config({
     misc = {
       disable_hyprland_logo = true,
       disable_splash_rendering = true,
-    },
+    }
+})
+
+hl.config({
     scrolling = {
       explicit_column_widths = "0.5 1.0",
       wrap_focus = false,

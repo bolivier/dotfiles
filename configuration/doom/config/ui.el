@@ -24,7 +24,7 @@
 
 (setq coding-font (cl-find-if (lambda (f)
 				(find-font (font-spec :name f)))
-			      '("0xProto"
+			      '("_0xproto"
                                 "Comic Code"
 				"Fira Code")))
 
@@ -38,7 +38,7 @@
 (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
 (set-fontset-font t 'unicode (font-spec :family "Symbols Nerd Font Mono") nil 'append)
 
-(setq doom-theme 'doom-monokai-pro)
+(setq doom-theme 'modus-operandi)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.

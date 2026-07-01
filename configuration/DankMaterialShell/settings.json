@@ -1,8 +1,15 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "registry",
-  "customThemeFile": "/home/brandon/.config/DankMaterialShell/themes/retrobox/theme.json",
-  "registryThemeVariants": {},
+  "customThemeFile": "/home/brandon/.config/DankMaterialShell/themes/modus/theme.json",
+  "registryThemeVariants": {
+    "modus": {
+      "light": {
+        "flavor": "operandi",
+        "accent": "blue"
+      }
+    }
+  },
   "matugenScheme": "scheme-tonal-spot",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
@@ -222,7 +229,7 @@
   "launcherLogoContrast": 1,
   "launcherLogoSizeOffset": 0,
   "fontFamily": "Inter Variable",
-  "monoFontFamily": "Fira Code",
+  "monoFontFamily": "0xProto",
   "fontWeight": 400,
   "fontScale": 1,
   "notepadUseMonospace": true,

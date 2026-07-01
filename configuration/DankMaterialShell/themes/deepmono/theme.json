@@ -1,0 +1,121 @@
+{
+  "id": "deepmono",
+  "name": "deepmono",
+  "version": "1.1.0",
+  "author": "viewerofall",
+  "description": "Pure grayscale theme, soft off-black at night, three button variants",
+  "dark": {},
+  "light": {},
+  "variants": {
+    "type": "multi",
+    "defaults": {
+      "dark": {
+        "accent": "graphite",
+        "flavor": "mono"
+      },
+      "light": {
+        "accent": "graphite",
+        "flavor": "mono-light"
+      }
+    },
+    "flavors": [
+      {
+        "id": "mono",
+        "name": "Mono",
+        "dark": {
+          "surface": "#161616",
+          "surfaceText": "#dcdcdc",
+          "surfaceVariant": "#222222",
+          "surfaceVariantText": "#a8a8a8",
+          "background": "#101010",
+          "backgroundText": "#e0e0e0",
+          "outline": "#3a3a3a",
+          "surfaceContainer": "#1c1c1c",
+          "surfaceContainerHigh": "#262626",
+          "surfaceContainerHighest": "#303030",
+          "error": "#c75c5c",
+          "warning": "#c9a227",
+          "info": "#7a8fa6"
+        },
+        "light": {}
+      },
+      {
+        "id": "mono-light",
+        "name": "Mono Light",
+        "dark": {},
+        "light": {
+          "surface": "#fafafa",
+          "surfaceText": "#1a1a1a",
+          "surfaceVariant": "#ececec",
+          "surfaceVariantText": "#4a4a4a",
+          "background": "#f4f4f4",
+          "backgroundText": "#161616",
+          "outline": "#c8c8c8",
+          "surfaceContainer": "#efefef",
+          "surfaceContainerHigh": "#e4e4e4",
+          "surfaceContainerHighest": "#d8d8d8",
+          "error": "#b3261e",
+          "warning": "#a36b00",
+          "info": "#3a5a78"
+        }
+      }
+    ],
+    "accents": [
+      {
+        "id": "graphite",
+        "mono": {
+          "primary": "#9a9a9a",
+          "primaryText": "#0d0d0d",
+          "primaryContainer": "#6e6e6e",
+          "secondary": "#787878",
+          "surfaceTint": "#9a9a9a"
+        },
+        "mono-light": {
+          "primary": "#9a9a9a",
+          "primaryText": "#0d0d0d",
+          "primaryContainer": "#c2c2c2",
+          "secondary": "#878787",
+          "surfaceTint": "#9a9a9a"
+        },
+        "name": "Graphite (black on grey)"
+      },
+      {
+        "id": "fog",
+        "mono": {
+          "primary": "#5e5e5e",
+          "primaryText": "#f5f5f5",
+          "primaryContainer": "#3f3f3f",
+          "secondary": "#787878",
+          "surfaceTint": "#5e5e5e"
+        },
+        "mono-light": {
+          "primary": "#6b6b6b",
+          "primaryText": "#ffffff",
+          "primaryContainer": "#4a4a4a",
+          "secondary": "#8a8a8a",
+          "surfaceTint": "#6b6b6b"
+        },
+        "name": "Fog (white on grey)"
+      },
+      {
+        "id": "paper",
+        "mono": {
+          "primary": "#f4f4f4",
+          "primaryText": "#080808",
+          "primaryContainer": "#d6d6d6",
+          "secondary": "#bcbcbc",
+          "surfaceTint": "#f4f4f4"
+        },
+        "mono-light": {
+          "primary": "#ffffff",
+          "primaryText": "#000000",
+          "primaryContainer": "#e6e6e6",
+          "secondary": "#c4c4c4",
+          "surfaceTint": "#ffffff"
+        },
+        "name": "Paper (deep black on white)"
+      }
+    ]
+  },
+  "sourceDir": "deepmono"
+}
