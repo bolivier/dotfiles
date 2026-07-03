@@ -31,31 +31,38 @@ in
     typescript-language-server
     nodejs
     bun
+    prettier
+
+    # Haskell
+    ghc
+    haskell-language-server
+
+    # Smalltalk
+    pharo
 
     # Rust
     rustup
 
     # SQL
     sqls
+    sqlite
+    postgresql # Daemon not automatically started
 
-    # Formatting / LSP
+    # Nix specific
     fira-code
     nixd
     nixfmt
-    prettier
+    direnv # Auto start dev shells
 
-    # Lua related stuff
-    # This is motivated by hyprland lua config
+    # Lua
+    # motivated by hyprland lua config
     lua
     luaformatter
     luarocks-nix
     lua-language-server
-
-    # development shells
-    direnv
   ];
 
-  home.sessionVariables.EDITOR = "nvim";
+  home.sessionVariables.EDITOR = "emacsclient -c -a ''";
 
   home.file.".config/doom".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dotfiles/configuration/doom";
