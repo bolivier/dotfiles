@@ -14,6 +14,7 @@
 (load! "config/nix")
 (load! "config/lua")
 (load! "config/winnow")
+(load! "config/markdown")
 (load! "site-lisp/vterm-editor")
 
 (map! :map comint-mode-map

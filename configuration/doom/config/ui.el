@@ -24,7 +24,7 @@
 
 (setq coding-font (cl-find-if (lambda (f)
 				(find-font (font-spec :name f)))
-			      '("_0xproto"
+			      '("0xProto"
                                 "Comic Code"
 				"Fira Code")))
 
