@@ -50,6 +50,9 @@
 
     # Music
     spotify
+
+    # VPN
+    nordvpn
   ];
 
   fonts.packages = with pkgs; [
