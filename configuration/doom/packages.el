@@ -63,7 +63,8 @@
 (package! with-editor)
 (package! vundo)
 (package! super-save)
-(package! solo-jazz-theme)
+(package! auto-dark)
 (package! tsi :recipe (:host github :repo "orzechowskid/tsi.el"))
 (package! yaml-pro :recipe (:host github :repo "zkry/yaml-pro"))
 (package! majutsu :recipe (:host github :repo "0WD0/majutsu"))
+

@@ -1,3 +1,3 @@
-theme = Monokai Classic
-font-family = "Comic Code Ligatures"
+theme = dark:Modus Vivendi,light:Modus Operandi
+font-family = 0xProto
 font-size = 10
