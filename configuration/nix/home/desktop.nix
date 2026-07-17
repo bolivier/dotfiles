@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+
   pkgs,
   ...
 }:
@@ -27,4 +28,6 @@ in
   home.file.".config/hypr".source = link "${configDir}/hypr";
   home.file.".config/DankMaterialShell".source = link "${configDir}/DankMaterialShell";
 
+  # Dank Material Shell shipped a GCal integrated calendar
+  programs.dank-calendar.enable = true;
 }

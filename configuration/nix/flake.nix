@@ -6,6 +6,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dankcalendar.url = "github:AvengeMedia/dankcalendar";
+
   };
 
   outputs =
@@ -13,6 +16,7 @@
       self,
       nixpkgs,
       home-manager,
+      dankcalendar,
       ...
     }:
     let
@@ -32,7 +36,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.brandon = {
-                imports = homeModules;
+                imports = homeModules ++ [ dankcalendar.homeModules.default ];
               };
               home-manager.extraSpecialArgs = { inherit inputs; };
             }

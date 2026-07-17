@@ -350,7 +350,6 @@
   "maxFprintTries": 15,
   "enableU2f": false,
   "u2fMode": "or",
-  "lockScreenActiveMonitor": "all",
   "lockScreenInactiveColor": "#000000",
   "lockScreenNotificationMode": 0,
   "hideBrightnessSlider": false,
@@ -566,5 +565,6 @@
   "clipboardEnterToPaste": false,
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "configVersion": 5
+  "configVersion": 12,
+  "barElevationEnabled": false
 }
