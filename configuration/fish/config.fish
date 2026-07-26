@@ -21,9 +21,9 @@ function ols
 end
 
 function ls
-    eza --long --group-directories-first --binary --no-permissions --octal-permissions --icons $argv
+    eza --long --group-directories-first --binary --no-permissions --octal-permissions --icons always $argv
 end
 
 if command -q mise
-    source ~/.config/fish/mise.fish  # no longer in conf.d/
+    source ~/.config/fish/mise.fish # no longer in conf.d/
 end
