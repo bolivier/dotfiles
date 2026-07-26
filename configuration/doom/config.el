@@ -3,6 +3,7 @@
 (load! "config/ui")
 (load! "config/emacs")
 (load! "site-lisp/comint-compose")
+(load! "site-lisp/tram-mode")
 (load! "config/postgres")
 (load! "config/org")
 (load! "config/editing")

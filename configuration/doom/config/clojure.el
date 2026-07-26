@@ -2,6 +2,19 @@
 
 (add-hook! (clojure-mode cider-repl-mode) #'enable-paredit-mode)
 
+(add-hook! (clojure-mode clojure-ts-mode) #'tram-mode-maybe-enable)
+
+(after! tram-mode
+  (map! :map tram-mode-map
+        :localleader
+        :prefix ("t" . "tram")
+        "j" #'tram-jump-between-handler-and-view
+        "h" #'tram-find-handler
+        "v" #'tram-find-view
+        "m" #'tram-find-model
+        "c" #'tram-find-concern
+        "r" #'tram-find-routes))
+
 (after! clojure-mode
   (setopt lsp-clojure-server-command '("clojure-lsp"))
   (setopt clojure-toplevel-inside-comment-form t)
