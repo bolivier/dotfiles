@@ -28,10 +28,21 @@
     "nix-command"
     "flakes"
   ];
+  # Hyprland's official binary cache, so consuming their flake doesn't mean
+  # compiling the whole hypr* stack from source on every bump.
+  nix.settings.substituters = [ "https://hyprland.cachix.org" ];
+  nix.settings.trusted-public-keys = [
+    "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+  ];
   nixpkgs.config.allowUnfree = true;
 
   # Boot
   boot.loader.systemd-boot.enable = true;
+  # Cap boot entries kept in the ESP. Without this, systemd-boot keeps a
+  # kernel+initrd for *every* generation, which fills the small 487M /boot
+  # partition and makes switches fail at the bootloader step. The installer
+  # garbage-collects generations beyond this limit before writing the new one.
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
 

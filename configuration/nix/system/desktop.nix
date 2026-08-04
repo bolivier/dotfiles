@@ -1,7 +1,27 @@
-{ pkgs, lib, ... }:
-
 {
-  # Hyprland + display manager
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+
+let
+  hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
+  # Consume Hyprland + its xdg portal from upstream's flake instead of nixpkgs.
+  # Done as an overlay so *every* consumer in the closure resolves to the
+  # upstream build: the compositor, the portal, hyprshot's hyprctl dep, and
+  # zoom's bundled portal backend. This keeps the (currently broken) nixpkgs
+  # hyprland out of the closure entirely rather than overriding it per-package.
+  nixpkgs.overlays = [
+    (final: prev: {
+      hyprland = hyprPkgs.hyprland;
+      xdg-desktop-portal-hyprland = hyprPkgs.xdg-desktop-portal-hyprland;
+    })
+  ];
+
+  # Display manager
   programs.hyprland.enable = true;
   services.greetd = {
     enable = true;
@@ -60,8 +80,8 @@
     nerd-fonts._0xproto # 0xProto Nerd Font (with icons)
   ];
 
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.login.enableGnomeKeyring = true;
+  # services.gnome.gnome-keyring.enable = true;
+  # security.pam.services.login.enableGnomeKeyring = true;
 
   # Enable the unfree 1Password packages
   nixpkgs.config.allowUnfreePredicate =

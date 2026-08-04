@@ -9,6 +9,11 @@
 
     dankcalendar.url = "github:AvengeMedia/dankcalendar";
 
+    # Hyprland straight from upstream. Deliberately NOT following nixpkgs:
+    # upstream pins a known-good nixpkgs for its dep closure, and making it
+    # follow ours re-introduces version skew (e.g. the glaze mismatch).
+    hyprland.url = "github:hyprwm/Hyprland";
+
   };
 
   outputs =
