@@ -80,9 +80,9 @@ in
     nerd-fonts._0xproto # 0xProto Nerd Font (with icons)
   ];
 
-  # services.gnome.gnome-keyring.enable = true;
-  # security.pam.services.login.enableGnomeKeyring = true;
-
+  # Required for trash, mounting, and thumbnail support
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
   # Enable the unfree 1Password packages
   nixpkgs.config.allowUnfreePredicate =
     pkg:

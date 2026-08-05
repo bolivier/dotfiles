@@ -17,6 +17,8 @@
   programs.zoom-us.enable = true;
   services.upower.enable = true;
 
+  hardware.flipperzero.enable = true;
+
   # Avahi (.local resolution)
   services.avahi = {
     enable = true;

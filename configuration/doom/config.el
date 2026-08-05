@@ -17,6 +17,7 @@
 (load! "config/winnow")
 (load! "config/markdown")
 (load! "site-lisp/vterm-editor")
+(load! "config/unsetting")
 
 (map! :map comint-mode-map
       "C-c C-e" #'comint-compose-open)

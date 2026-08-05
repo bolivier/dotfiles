@@ -75,7 +75,9 @@
     bluetui
     curl
     fd
+    file
     git
+    lsof
     neovim
     ouch
     ripgrep

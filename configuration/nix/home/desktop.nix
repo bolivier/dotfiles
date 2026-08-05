@@ -22,7 +22,6 @@ in
     hyprlock
     quickshell
     sioyek # pdf reader
-    kdePackages.okular # pdf reader (trying out the KDE one)
   ];
 
   home.file.".config/hypr".source = link "${configDir}/hypr";

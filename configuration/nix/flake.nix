@@ -61,7 +61,9 @@
 
       nixosConfigurations.martini = mkNixos {
         hostModule = ./hosts/martini;
+
         homeModules = [
+
           ./home/core.nix
           ./home/dev.nix
           ./home/desktop.nix

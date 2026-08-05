@@ -96,16 +96,13 @@ function super_shift(key)
     return "SUPER + SHIFT + " .. key
 end
 
-local global_super_bindings = {
-  q = hl.dsp.window.close(),
+local global_super_bindings = {  
   ["return"] = hl.dsp.exec_cmd(terminal),
   q =  hl.dsp.window.close(),
   e =  hl.dsp.exec_cmd("emacs"),
-  w =  hl.dsp.exec_cmd(browser),
-  m =  hl.dsp.exec_cmd("spotify"),
-  s =  hl.dsp.exec_cmd("slack"),
+  w =  hl.dsp.exec_cmd(browser),  
   escape =  hl.dsp.exec_cmd("hyprlock"),
-  print =  hl.dsp.exec_cmd("hyprshot -m region"),   
+  print =  hl.dsp.exec_cmd("hyprshot -m region"),
 }
 
 for k, f in pairs(global_super_bindings) do

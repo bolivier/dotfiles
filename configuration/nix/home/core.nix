@@ -28,5 +28,14 @@
     interactiveShellInit = builtins.readFile ./config.fish;
   };
   programs.zoxide.enable = true;
-  programs.eza.enable = true;
+  programs.eza = {
+    enable = true;
+    icons = "always";
+    colors = "always";
+    extraOptions = [
+      "--long"
+      "--group-directories-first"
+      "--octal-permissions"
+    ];
+  };
 }
