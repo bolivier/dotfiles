@@ -27,3 +27,6 @@ end
 if command -q mise
     source ~/.config/fish/mise.fish # no longer in conf.d/
 end
+
+# kimi-code
+fish_add_path -g "/Users/brandon/.kimi-code/bin"

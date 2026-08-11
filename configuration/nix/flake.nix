@@ -71,8 +71,8 @@
         ];
       };
 
-      nixosConfigurations.media-server = mkNixos {
-        hostModule = ./hosts/media-server;
+      nixosConfigurations.ale = mkNixos {
+        hostModule = ./hosts/ale;
         homeModules = [
           ./home/core.nix
         ];

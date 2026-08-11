@@ -17,7 +17,7 @@
     fsType = "ext4";
   };
 
-  networking.hostName = "media-server";
+  networking.hostName = "ale";
 
   # Avahi (.local resolution)
   services.avahi = {
@@ -34,7 +34,7 @@
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
-    virtualHosts."media-server.local" = {
+    virtualHosts."ale.local" = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:32400";
         proxyWebsockets = true;
