@@ -28,18 +28,71 @@
     openFirewall = true;
   };
 
-  # Serve the web UI at port 80; Plex apps still use 32400
+  services.home-assistant = {
+    enable = true;
+    openFirewall = true; # 8123
+    extraComponents = [
+      # required for onboarding
+      "met"
+      "radio_browser"
+      # local device discovery
+      "esphome"
+      "zeroconf"
+    ];
+    config = {
+      default_config = { };
+      homeassistant.name = "Home";
+      # HA rejects proxied requests unless the proxy is trusted
+      http = {
+        use_x_forwarded_for = true;
+        trusted_proxies = [
+          "127.0.0.1"
+          "::1"
+        ];
+      };
+    };
+  };
+
+  # Serve the web UIs at port 80; Plex apps still use 32400
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
-    virtualHosts."ale.local" = {
+    virtualHosts."plex.ale.local" = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:32400";
         proxyWebsockets = true;
       };
     };
+    virtualHosts."ha.ale.local" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8123";
+        proxyWebsockets = true;
+      };
+    };
   };
   networking.firewall.allowedTCPPorts = [ 80 ];
+
+  # Avahi only announces ale.local; publish the vhost names too
+  systemd.services = lib.listToAttrs (
+    map (name: {
+      name = "avahi-alias-${name}";
+      value = {
+        description = "Publish ${name}.ale.local over mDNS";
+        requires = [ "avahi-daemon.service" ];
+        after = [
+          "network-online.target"
+          "avahi-daemon.service"
+        ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig.Restart = "on-failure";
+        script = ''
+          ip=$(${pkgs.iproute2}/bin/ip -4 route get 1.1.1.1 | ${pkgs.gawk}/bin/awk '{print $7; exit}')
+          exec ${pkgs.avahi}/bin/avahi-publish -a -R ${name}.ale.local "$ip"
+        '';
+      };
+    }) [ "plex" "ha" ]
+  );
 
   # Media storage: sda2 mounted at /mnt/disk1, plus /mnt/disk2 as a plain
   # directory on the root disk (sdb also holds /). mergerfs unions them at
