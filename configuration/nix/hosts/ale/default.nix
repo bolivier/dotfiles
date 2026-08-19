@@ -42,6 +42,10 @@
     config = {
       default_config = { };
       homeassistant.name = "Home";
+      "automation ui" = "!include automations.yaml";
+      "scene ui" = "!include scenes.yaml";
+      "script ui" = "!include scripts.yaml";
+
       # HA rejects proxied requests unless the proxy is trusted
       http = {
         use_x_forwarded_for = true;
